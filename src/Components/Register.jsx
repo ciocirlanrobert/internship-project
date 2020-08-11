@@ -52,12 +52,12 @@ export default function Register() {
       const userId = response.data.createUser.id;
       createContactinfo({
         variables: {
-          email: "mockemail@mail.com",
-          phone: "0700 000 000",
-          city: "Mock",
-          website: "website.com",
-          avatarUrl: "avatar.com",
-          about: "lorem ipsum",
+          email: "mock",
+          phone: "mock",
+          city: "mock",
+          website: "mock",
+          avatarUrl: "mock",
+          about: "mock",
           countryId: 3,
         },
       }).then((response) => {
