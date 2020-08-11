@@ -7,8 +7,6 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
-//__typedef query
-
 const useStyles = makeStyles({
   firstName: {
     marginRight: "10px",
@@ -22,22 +20,19 @@ export default function Register() {
   const [lastName, setLastname] = useState("");
   const userRoleId = 3;
 
-  const styles = useStyles();
-
   const USER = gql`
-		mutation {
-			createUser(
-				username: "${username}"
-				firstName: "${firstName}"
-				lastName: "${lastName}"
-				password: "${password}"
-				userRoleId: ${userRoleId}
-			) {
-				password
-				username
-			}
-		}
-	`;
+  mutation {
+      createUser(
+          username: "${username}"
+          firstName: "${firstName}"
+          lastName: "${lastName}"
+          password: "${password}"
+          userRoleId: ${userRoleId}
+      ) {
+		  id
+      }
+  }
+  `;
 
   const CONTACTINFO = gql`
     mutation {
@@ -56,8 +51,16 @@ export default function Register() {
     }
   `;
 
+  const styles = useStyles();
+
   const [addUser, { data }] = useMutation(USER);
   const [createContactinfo, { data: contactInfo }] = useMutation(CONTACTINFO);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    //response.data.createUser.id
+    addUser();
+  };
 
   return (
     <div className="loginRegisterBody">
@@ -66,14 +69,7 @@ export default function Register() {
         <Typography component="h1" variant="h4">
           Register
         </Typography>
-        <form
-          className="form"
-          onSubmit={(event) => {
-            event.preventDefault();
-            addUser();
-            createContactinfo();
-          }}
-        >
+        <form className="form" onSubmit={handleSubmit}>
           <div className="name">
             <TextField
               variant="outlined"
