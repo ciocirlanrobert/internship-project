@@ -7,3 +7,27 @@ export const UpdateUserContactInfo = gql`
     }
   }
 `;
+
+export const CreateContactInfo = gql`
+  mutation createContactInfo(
+    $email: String!
+    $phone: String!
+    $city: String!
+    $website: String!
+    $avatarUrl: String!
+    $about: String!
+    $countryId: Int!
+  ) {
+    createContactInfo(
+      email: $email
+      phone: $phone
+      city: $city
+      website: $website
+      avatarUrl: $avatarUrl
+      about: $about
+      countryId: $countryId
+    ) {
+      id
+    }
+  }
+`;

@@ -6,6 +6,7 @@ import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
+import { CreateContactInfo, UpdateUserContactInfo } from "../mutations";
 
 const useStyles = makeStyles({
   firstName: {
@@ -34,32 +35,40 @@ export default function Register() {
   }
   `;
 
-  const CONTACTINFO = gql`
-    mutation {
-      createContactInfo(
-        email: "mock"
-        phone: "mock"
-        city: "mock"
-        website: "mock"
-        avatarUrl: "mock"
-        about: "mock"
-        countryId: 4
-      ) {
-        id
-        email
-      }
-    }
-  `;
-
   const styles = useStyles();
 
   const [addUser, { data }] = useMutation(USER);
-  const [createContactinfo, { data: contactInfo }] = useMutation(CONTACTINFO);
+  const [createContactinfo, { data: contactInfo }] = useMutation(
+    CreateContactInfo
+  );
+  const [updateMockContactInfo, { data: contactInfoData }] = useMutation(
+    UpdateUserContactInfo
+  );
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //response.data.createUser.id
-    addUser();
+
+    addUser().then((response) => {
+      const userId = response.data.createUser.id;
+      createContactinfo({
+        variables: {
+          email: "mockemail@mail.com",
+          phone: "0700 000 000",
+          city: "Mock",
+          website: "website.com",
+          avatarUrl: "avatar.com",
+          about: "lorem ipsum",
+          countryId: 3,
+        },
+      }).then((response) => {
+        updateMockContactInfo({
+          variables: {
+            id: userId,
+            contactInfoId: response.data.createContactInfo.id,
+          },
+        });
+      });
+    });
   };
 
   return (
