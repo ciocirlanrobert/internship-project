@@ -44,7 +44,6 @@ export default function Navbar() {
 
   return (
     <div className={classes.root}>
-      {console.log(user.userRoleId)}
       <AppBar position="static" className={classes.navbar}>
         <h3></h3>
         <Toolbar>
