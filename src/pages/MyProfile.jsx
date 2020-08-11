@@ -10,7 +10,8 @@ import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
 import Button from "@material-ui/core/Button";
 import { UpdateContactInfo } from "../mutations";
-import { useMutation } from "@apollo/client";
+import { UserContactInfo } from "../queries";
+import { useMutation, useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -98,6 +99,34 @@ export default function MyProfile() {
     UpdateContactInfo
   );
 
+  const { data: querriedContactInfo } = useQuery(UserContactInfo, {
+    variables: {
+      id: user.id,
+    },
+    onCompleted: () => {
+      const {
+        about,
+        avatarUrl,
+        city,
+        country,
+        email,
+        phone,
+        website,
+      } = querriedContactInfo.user.contactInfo;
+
+      const auxContactInfo = {
+        Email: email,
+        Phone: phone,
+        Website: website,
+        City: city,
+        Country: country.name,
+        Avatar: avatarUrl,
+      };
+
+      setGeneralInfo(auxContactInfo);
+    },
+  });
+
   const handleGeneralInfoSubmit = (event) => {
     event.preventDefault();
     updateContactInfo({
@@ -154,20 +183,22 @@ export default function MyProfile() {
       <Container maxWidth="md" className={style.mainInfo} component="main">
         <h1 className={style.sectionTitle}>General Info</h1>
         <form className={style.generalInfo} onSubmit={handleGeneralInfoSubmit}>
-          {contactInfo.map((item) => (
-            <div className={style.formRow} key={item}>
-              <label className={style.label}>{item}</label>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                name={item}
-                autoComplete="off"
-                autoFocus
-                onChange={handleChange}
-              />
-            </div>
-          ))}
+          {generalInfo.Email !== "" &&
+            contactInfo.map((item) => (
+              <div className={style.formRow} key={item}>
+                <label className={style.label}>{item}</label>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  name={item}
+                  autoComplete="off"
+                  autoFocus
+                  onChange={handleChange}
+                  defaultValue={generalInfo[item]}
+                />
+              </div>
+            ))}
           <Button
             type="submit"
             fullWidth
