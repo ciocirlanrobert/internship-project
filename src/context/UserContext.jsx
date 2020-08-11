@@ -8,6 +8,7 @@ const defaultValue = {
     lastName: "",
     userRoleId: -1,
     id: -1,
+    contactInfoId: -1,
   },
 };
 
@@ -21,6 +22,14 @@ export default function UserContextProvider({ children }) {
       return {
         ...prevUser,
         id: newId,
+      };
+    });
+
+  const updateContactInfoId = (newId) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        contactInfoId: newId,
       };
     });
 
@@ -72,6 +81,7 @@ export default function UserContextProvider({ children }) {
     updateFirstname,
     updateLastname,
     updateId,
+    updateContactInfoId,
   };
 
   return (

@@ -9,6 +9,8 @@ import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useState } from "react";
 import Button from "@material-ui/core/Button";
+import { UpdateContactInfo } from "../mutations";
+import { useMutation } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -76,6 +78,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const contactInfo = ["Email", "Phone", "Website", "City", "Country", "Avatar"];
+const about = "test about";
 
 export default function MyProfile() {
   const style = useStyles();
@@ -87,13 +90,28 @@ export default function MyProfile() {
     Phone: "",
     Website: "",
     City: "",
-    Country: "",
+    Country: -1,
     Avatar: "",
   });
 
+  const [updateContactInfo, { data: contactInfoData }] = useMutation(
+    UpdateContactInfo
+  );
+
   const handleGeneralInfoSubmit = (event) => {
     event.preventDefault();
-    console.log(generalInfo);
+    updateContactInfo({
+      variables: {
+        email: generalInfo.Email,
+        phone: generalInfo.Phone,
+        city: generalInfo.City,
+        website: generalInfo.Website,
+        avatarUrl: generalInfo.Avatar,
+        about: about,
+        countryId: 4,
+        id: user.contactInfoId,
+      },
+    });
   };
 
   const handleChange = (event) => {

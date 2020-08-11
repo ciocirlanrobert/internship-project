@@ -26,6 +26,7 @@ export default function Login() {
     updateFirstname,
     updateLastname,
     updateId,
+    updateContactInfoId,
   } = useUserContext();
 
   const USERS = gql`
@@ -36,6 +37,9 @@ export default function Login() {
         firstName
         lastName
         id
+        contactInfo {
+          id
+        }
       }
     }
   `;
@@ -54,6 +58,7 @@ export default function Login() {
         updateLastname(data.users[index].lastName);
         updateUserRoleId(3);
         updateId(data.users[index].id);
+        updateContactInfoId(data.users[index].contactInfo.id);
 
         history.push("/landingPage");
       } else {
