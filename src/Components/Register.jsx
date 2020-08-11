@@ -10,21 +10,21 @@ import { makeStyles } from "@material-ui/core/styles";
 //__typedef query
 
 const useStyles = makeStyles({
-	firstName: {
-		marginRight: "10px",
-	},
+  firstName: {
+    marginRight: "10px",
+  },
 });
 
 export default function Register() {
-	const [username, setUsername] = useState("");
-	const [password, setPassword] = useState("");
-	const [firstName, setFirstname] = useState("");
-	const [lastName, setLastname] = useState("");
-	const userRoleId = 3;
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
+  const userRoleId = 3;
 
-	const styles = useStyles();
+  const styles = useStyles();
 
-	const USER = gql`
+  const USER = gql`
 		mutation {
 			createUser(
 				username: "${username}"
@@ -39,87 +39,102 @@ export default function Register() {
 		}
 	`;
 
-	const [addUser, { data }] = useMutation(USER);
+  const CONTACTINFO = gql`
+    mutation {
+      createContactInfo(
+        email: "mock"
+        phone: "mock"
+        city: "mock"
+        website: "mock"
+        avatarUrl: "mock"
+        about: "mock"
+        countryId: 4
+      ) {
+        id
+        email
+      }
+    }
+  `;
 
-	return (
-		<div className='loginRegisterBody'>
-			<Container component='main' maxWidth='xs' className='main'>
-				<LoginRegisterSwitchers />
-				<Typography component='h1' variant='h4'>
-					Register
-				</Typography>
-				<form
-					className='form'
-					onSubmit={(event) => {
-						event.preventDefault();
-						addUser();
-						console.log(data);
-						console.log("data");
-					}}>
-					<div className='name'>
-						<TextField
-							variant='outlined'
-							margin='normal'
-							required
-							id='firstname'
-							name='firstname'
-							label='Firstname'
-							autoComplete='off'
-							autoFocus
-							className={styles.firstName}
-							onChange={(event) =>
-								setFirstname(event.target.value)
-							}
-						/>
-						<TextField
-							variant='outlined'
-							margin='normal'
-							required
-							id='lastname'
-							name='lastname'
-							label='Lastname'
-							autoComplete='off'
-							autoFocus
-							onChange={(event) =>
-								setLastname(event.target.value)
-							}
-						/>
-					</div>
-					<TextField
-						variant='outlined'
-						margin='normal'
-						required
-						fullWidth
-						id='username'
-						name='username'
-						label='Username'
-						autoComplete='off'
-						autoFocus
-						onChange={(event) => setUsername(event.target.value)}
-					/>
-					<TextField
-						variant='outlined'
-						margin='normal'
-						required
-						fullWidth
-						id='password'
-						name='password'
-						label='Password'
-						type='password'
-						autoComplete='off'
-						autoFocus
-						onChange={(event) => setPassword(event.target.value)}
-					/>
-					<Button
-						type='submit'
-						id='submit'
-						color='primary'
-						fullWidth
-						variant='contained'>
-						Register
-					</Button>
-				</form>
-			</Container>
-		</div>
-	);
+  const [addUser, { data }] = useMutation(USER);
+  const [createContactinfo, { data: contactInfo }] = useMutation(CONTACTINFO);
+
+  return (
+    <div className="loginRegisterBody">
+      <Container component="main" maxWidth="xs" className="main">
+        <LoginRegisterSwitchers />
+        <Typography component="h1" variant="h4">
+          Register
+        </Typography>
+        <form
+          className="form"
+          onSubmit={(event) => {
+            event.preventDefault();
+            addUser();
+            createContactinfo();
+          }}
+        >
+          <div className="name">
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              id="firstname"
+              name="firstname"
+              label="Firstname"
+              autoComplete="off"
+              autoFocus
+              className={styles.firstName}
+              onChange={(event) => setFirstname(event.target.value)}
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              id="lastname"
+              name="lastname"
+              label="Lastname"
+              autoComplete="off"
+              autoFocus
+              onChange={(event) => setLastname(event.target.value)}
+            />
+          </div>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            name="username"
+            label="Username"
+            autoComplete="off"
+            autoFocus
+            onChange={(event) => setUsername(event.target.value)}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="password"
+            name="password"
+            label="Password"
+            type="password"
+            autoComplete="off"
+            autoFocus
+            onChange={(event) => setPassword(event.target.value)}
+          />
+          <Button
+            type="submit"
+            id="submit"
+            color="primary"
+            fullWidth
+            variant="contained"
+          >
+            Register
+          </Button>
+        </form>
+      </Container>
+    </div>
+  );
 }
