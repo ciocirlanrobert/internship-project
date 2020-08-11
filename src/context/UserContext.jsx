@@ -39,11 +39,29 @@ export default function UserContextProvider({ children }) {
 			};
 		});
 
+	const updateFirstname = (newFirstname) =>
+		setUser((prevUser) => {
+			return {
+				...prevUser,
+				firstName: newFirstname,
+			};
+		});
+
+	const updateLastname = (newLastname) =>
+		setUser((prevUser) => {
+			return {
+				...prevUser,
+				lastName: newLastname,
+			};
+		});
+
 	const contextValue = {
 		user,
 		updatePassword,
 		updateUsername,
 		updateUserRoleId,
+		updateFirstname,
+		updateLastname,
 	};
 
 	return (
