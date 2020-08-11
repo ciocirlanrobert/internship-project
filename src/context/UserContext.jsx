@@ -1,76 +1,86 @@
 import React, { useState, useContext, createContext } from "react";
 
 const defaultValue = {
-	user: {
-		username: "",
-		password: "",
-		firstName: "",
-		lastName: "",
-		userRoleId: -1,
-	},
+  user: {
+    username: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    userRoleId: -1,
+    id: -1,
+  },
 };
 
 const UserContext = createContext(defaultValue);
 
 export default function UserContextProvider({ children }) {
-	const [user, setUser] = useState(defaultValue.user);
+  const [user, setUser] = useState(defaultValue.user);
 
-	const updateUsername = (newUsername) =>
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				username: newUsername,
-			};
-		});
+  const updateId = (newId) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        id: newId,
+      };
+    });
 
-	const updatePassword = (newPassword) =>
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				password: newPassword,
-			};
-		});
+  const updateUsername = (newUsername) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        username: newUsername,
+      };
+    });
 
-	const updateUserRoleId = (newUserRoleId) =>
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				userRoleId: newUserRoleId,
-			};
-		});
+  const updatePassword = (newPassword) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        password: newPassword,
+      };
+    });
 
-	const updateFirstname = (newFirstname) =>
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				firstName: newFirstname,
-			};
-		});
+  const updateUserRoleId = (newUserRoleId) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        userRoleId: newUserRoleId,
+      };
+    });
 
-	const updateLastname = (newLastname) =>
-		setUser((prevUser) => {
-			return {
-				...prevUser,
-				lastName: newLastname,
-			};
-		});
+  const updateFirstname = (newFirstname) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        firstName: newFirstname,
+      };
+    });
 
-	const contextValue = {
-		user,
-		updatePassword,
-		updateUsername,
-		updateUserRoleId,
-		updateFirstname,
-		updateLastname,
-	};
+  const updateLastname = (newLastname) =>
+    setUser((prevUser) => {
+      return {
+        ...prevUser,
+        lastName: newLastname,
+      };
+    });
 
-	return (
-		<>
-			<UserContext.Provider value={contextValue}>
-				{children}
-			</UserContext.Provider>
-		</>
-	);
+  const contextValue = {
+    user,
+    updatePassword,
+    updateUsername,
+    updateUserRoleId,
+    updateFirstname,
+    updateLastname,
+    updateId,
+  };
+
+  return (
+    <>
+      <UserContext.Provider value={contextValue}>
+        {children}
+      </UserContext.Provider>
+    </>
+  );
 }
 
 export const useUserContext = () => useContext(UserContext);
