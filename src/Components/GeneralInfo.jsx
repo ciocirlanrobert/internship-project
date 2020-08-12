@@ -136,17 +136,22 @@ export default function GeneralInfo() {
             </div>
           ))}
         {countries && generalInfo.Email && (
-          <Select
-            value={countryId > 0 ? countryId : generalInfo.Country}
-            onChange={handleCountryChange}
-          >
-            {countries.map((country) => (
-              <MenuItem key={country.id} value={country.id}>
-                {country.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <div className={style.formRow}>
+            <label className={style.label}>Country</label>
+            <Select
+              className={style.dropdown}
+              value={countryId > 0 ? countryId : generalInfo.Country}
+              onChange={handleCountryChange}
+            >
+              {countries.map((country) => (
+                <MenuItem key={country.id} value={country.id}>
+                  {country.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </div>
         )}
+
         <Button
           type="submit"
           fullWidth
