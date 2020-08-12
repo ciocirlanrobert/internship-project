@@ -6,6 +6,9 @@ import { useUserContext } from "../context/UserContext";
 import { UpdateContactInfo } from "../mutations";
 import { UserContactInfo } from "../queries";
 import { useMutation, useQuery } from "@apollo/client";
+import Select from "@material-ui/core/Select";
+import { Countries } from "../queries";
+import { MenuItem } from "@material-ui/core";
 
 const useStyle = makeStyles({
   generalInfo: {
@@ -28,7 +31,7 @@ const useStyle = makeStyles({
   },
 });
 
-const contactInfo = ["Email", "Phone", "Website", "City", "Country", "Avatar"];
+const contactInfo = ["Email", "Phone", "Website", "City", "Avatar"];
 const about = "test about";
 
 export default function GeneralInfo() {
@@ -43,6 +46,8 @@ export default function GeneralInfo() {
     Country: -1,
     Avatar: "",
   });
+  const [countries, setCountries] = useState([]);
+  const [countryId, setCountryId] = useState(generalInfo.Country);
 
   const [updateContactInfo, { data: contactInfoData }] = useMutation(
     UpdateContactInfo
@@ -69,11 +74,17 @@ export default function GeneralInfo() {
         Phone: phone,
         Website: website,
         City: city,
-        Country: country.name,
+        Country: country.id,
         Avatar: avatarUrl,
       };
 
       setGeneralInfo(auxContactInfo);
+    },
+  });
+
+  const { data: querriedCountries } = useQuery(Countries, {
+    onCompleted: () => {
+      setCountries(querriedCountries.counties);
     },
   });
 
@@ -87,7 +98,7 @@ export default function GeneralInfo() {
         website: generalInfo.Website,
         avatarUrl: generalInfo.Avatar,
         about: about,
-        countryId: 4,
+        countryId: countryId,
         id: user.contactInfoId,
       },
     });
@@ -98,6 +109,10 @@ export default function GeneralInfo() {
       ...generalInfo,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleCountryChange = (event) => {
+    setCountryId(event.target.value);
   };
 
   return (
@@ -120,6 +135,18 @@ export default function GeneralInfo() {
               />
             </div>
           ))}
+        {countries && generalInfo.Email && (
+          <Select
+            value={countryId > 0 ? countryId : generalInfo.Country}
+            onChange={handleCountryChange}
+          >
+            {countries.map((country) => (
+              <MenuItem key={country.id} value={country.id}>
+                {country.name}
+              </MenuItem>
+            ))}
+          </Select>
+        )}
         <Button
           type="submit"
           fullWidth
