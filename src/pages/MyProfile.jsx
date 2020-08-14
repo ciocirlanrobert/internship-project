@@ -6,8 +6,8 @@ import HomeIcon from "@material-ui/icons/Home";
 import IconButton from "@material-ui/core/IconButton";
 import { useUserContext } from "../context/UserContext";
 import Container from "@material-ui/core/Container";
-import { useState } from "react";
 import GeneralInfo from "../Components/GeneralInfo";
+import CV from "./CV/CV";
 
 const useStyles = makeStyles((theme) => ({
   large: {
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     marginTop: "20px",
+    marginBottom: "40px",
   },
 }));
 
@@ -94,6 +95,7 @@ export default function MyProfile() {
       <Container maxWidth="md" className={style.mainInfo} component="main">
         <GeneralInfo />
       </Container>
+      <CV />
     </>
   );
 }

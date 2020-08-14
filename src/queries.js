@@ -27,3 +27,17 @@ export const Countries = gql`
     }
   }
 `;
+
+export const Educations = gql`
+  query userEducations($id: Int!) {
+    user(id: $id) {
+      userEducations {
+        description
+        id
+        institution
+        startDate
+        endDate
+      }
+    }
+  }
+`;
