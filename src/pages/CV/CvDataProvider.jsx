@@ -27,9 +27,7 @@ export default function CvDataProvider() {
     variables: {
       id: user.id,
     },
-    onCompleted: () => {
-      console.log(queriedEducations);
-    },
+    fetchPolicy: "network-only",
   });
 
   const educations =

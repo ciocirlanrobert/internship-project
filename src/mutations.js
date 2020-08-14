@@ -57,3 +57,27 @@ export const CreateContactInfo = gql`
     }
   }
 `;
+
+export const UpdateUserEducation = gql`
+  mutation updateUserEducation(
+    $id: Int!
+    $institution: String
+    $description: String
+    $startDate: String
+    $endDate: String
+  ) {
+    updateUserEducation(
+      id: $id
+      institution: $institution
+      description: $description
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      id
+      institution
+      description
+      startDate
+      endDate
+    }
+  }
+`;
