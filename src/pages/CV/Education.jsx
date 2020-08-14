@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useQuery, useMutation } from "@apollo/client";
 import EducationCard from "./EducationCard";
-import { Educations } from "../../queries";
-import { useUserContext } from "../../context/UserContext";
 
 const useStyle = makeStyles({
   sectionTitle: {
@@ -11,21 +8,8 @@ const useStyle = makeStyles({
   },
 });
 
-export default function Education() {
+export default function Education({ educations }) {
   const style = useStyle();
-  const { user } = useUserContext();
-
-  const { data: queriedEducations } = useQuery(Educations, {
-    variables: {
-      id: user.id,
-    },
-    onCompleted: () => {
-      console.log(queriedEducations);
-    },
-  });
-
-  const educations =
-    (queriedEducations && queriedEducations.user.userEducations) || [];
 
   return (
     <>
