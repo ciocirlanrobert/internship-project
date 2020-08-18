@@ -9,7 +9,8 @@ import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useMutation } from "@apollo/client";
-import { UpdateUserEducation } from "../../mutations";
+import { UpdateUserEducation, DeleteUserEducation } from "../../mutations";
+import { Educations } from "../../queries";
 
 const useStyle = makeStyles((theme) => ({
   root: {
@@ -48,6 +49,7 @@ export default function EducationCard(props) {
   const style = useStyle();
 
   const [open, setOpen] = useState(false);
+  const [del, setDel] = useState(false);
   const [educationInfo, setEducationInfo] = useState({
     institution: props.institution,
     description: props.description,
@@ -64,11 +66,12 @@ export default function EducationCard(props) {
     setOpen(false);
   };
 
-  const handleDelete = () => {};
+  const handleDelete = () => {
+    setDel(true);
+  };
 
   const handleEditSubmit = (event) => {
     event.preventDefault();
-    console.log(educationInfo);
     updateUserEducation();
     handleEditClose();
   };
@@ -96,13 +99,28 @@ export default function EducationCard(props) {
     }
   );
 
+  const [deleteUserEducation] = useMutation(DeleteUserEducation, {
+    variables: {
+      id: props.id,
+    },
+    refetchQueries: [
+      {
+        query: Educations,
+        variables: {
+          id: props.userId,
+        },
+      },
+    ],
+  });
+
   const editBody = (
     <div className={style.paper}>
       <h1>Edit</h1>
       <form onSubmit={handleEditSubmit}>
         {Object.keys(props).map(
           (item) =>
-            item !== "id" && (
+            item !== "id" &&
+            item !== "userId" && (
               <div className={style.formRow} key={item}>
                 <label className={style.label}>{item}</label>
                 {item === "startDate" || item === "endDate" ? (
@@ -146,6 +164,32 @@ export default function EducationCard(props) {
     </div>
   );
 
+  const deleteBody = (
+    <div className={style.paper}>
+      <h1>Are you sure you want to delete it?</h1>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        id="submit"
+        onClick={deleteUserEducation}
+      >
+        Yes
+      </Button>
+      <Button
+        type="submit"
+        fullWidth
+        variant="contained"
+        color="primary"
+        id="submit"
+        onClick={() => setDel(false)}
+      >
+        No
+      </Button>
+    </div>
+  );
+
   return (
     <Card className={style.root}>
       <CardContent>
@@ -169,6 +213,7 @@ export default function EducationCard(props) {
         <Modal open={open} onClose={handleEditClose}>
           {editBody}
         </Modal>
+        <Modal open={del}>{deleteBody}</Modal>
         <IconButton
           edge="start"
           color="inherit"

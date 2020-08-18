@@ -149,7 +149,6 @@ export default function Education({ educations }) {
   return (
     <>
       <h1 className={style.sectionTitle}>Education</h1>
-      {console.log(user.id)}
       {educations.length > 0 &&
         educations.map((item) => (
           <EducationCard
@@ -159,6 +158,7 @@ export default function Education({ educations }) {
             startDate={item.startDate}
             endDate={item.endDate}
             key={item.id}
+            userId={user.id}
           />
         ))}
       <Modal open={open} onClose={handleEditClose}>

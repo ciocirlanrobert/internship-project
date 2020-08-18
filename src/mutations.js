@@ -105,3 +105,9 @@ export const AddUserEducation = gql`
     }
   }
 `;
+
+export const DeleteUserEducation = gql`
+  mutation deleteEducation($id: [Int!]!) {
+    deleteUserEducation(id: $id)
+  }
+`;
