@@ -81,3 +81,27 @@ export const UpdateUserEducation = gql`
     }
   }
 `;
+
+export const AddUserEducation = gql`
+  mutation createEducation(
+    $institution: String
+    $description: String
+    $userId: Int!
+    $startDate: String
+    $endDate: String
+  ) {
+    createUserEducation(
+      institution: $institution
+      description: $description
+      userId: $userId
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      institution
+      description
+      id
+      startDate
+      endDate
+    }
+  }
+`;

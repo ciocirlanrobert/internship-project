@@ -33,6 +33,15 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: "20px 40px",
   },
+  container: {
+    display: "flex",
+    flexWrap: "wrap",
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+  },
 }));
 
 export default function EducationCard(props) {
@@ -55,6 +64,8 @@ export default function EducationCard(props) {
     setOpen(false);
   };
 
+  const handleDelete = () => {};
+
   const handleEditSubmit = (event) => {
     event.preventDefault();
     console.log(educationInfo);
@@ -76,6 +87,8 @@ export default function EducationCard(props) {
         institution: educationInfo.institution,
         description: educationInfo.description,
         id: props.id,
+        startDate: educationInfo.startDate,
+        endDate: educationInfo.endDate,
       },
       onCompleted: () => {
         props = (returnedUserEducation && returnedUserEducation) || [];
@@ -85,22 +98,38 @@ export default function EducationCard(props) {
 
   const editBody = (
     <div className={style.paper}>
+      <h1>Edit</h1>
       <form onSubmit={handleEditSubmit}>
         {Object.keys(props).map(
           (item) =>
             item !== "id" && (
               <div className={style.formRow} key={item}>
                 <label className={style.label}>{item}</label>
-                <TextField
-                  variant="outlined"
-                  margin="normal"
-                  required
-                  name={item}
-                  autoComplete="off"
-                  autoFocus
-                  defaultValue={props[item]}
-                  onChange={handleChange}
-                />
+                {item === "startDate" || item === "endDate" ? (
+                  <TextField
+                    onChange={handleChange}
+                    id="date"
+                    label="Birthday"
+                    type="date"
+                    name={item}
+                    defaultValue={props[item]}
+                    className={style.textField}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                ) : (
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    name={item}
+                    autoComplete="off"
+                    autoFocus
+                    defaultValue={props[item]}
+                    onChange={handleChange}
+                  />
+                )}
               </div>
             )
         )}
@@ -137,8 +166,15 @@ export default function EducationCard(props) {
         >
           <EditIcon />
         </IconButton>
-        <Modal open={open}>{editBody}</Modal>
-        <IconButton edge="start" color="inherit" fontSize="small">
+        <Modal open={open} onClose={handleEditClose}>
+          {editBody}
+        </Modal>
+        <IconButton
+          edge="start"
+          color="inherit"
+          fontSize="small"
+          onClick={handleDelete}
+        >
           <DeleteIcon />
         </IconButton>
       </CardContent>
