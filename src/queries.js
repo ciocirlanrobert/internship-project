@@ -41,3 +41,17 @@ export const Educations = gql`
     }
   }
 `;
+
+export const UserWorkExperiences = gql`
+  query WorkExperience($id: Int!) {
+    user(id: $id) {
+      userWorkExperiences {
+        institution
+        description
+        startDate
+        endDate
+        id
+      }
+    }
+  }
+`;

@@ -111,3 +111,59 @@ export const DeleteUserEducation = gql`
     deleteUserEducation(id: $id)
   }
 `;
+
+export const DeleteUserWorkExperience = gql`
+  mutation deleteUserWE($id: [Int!]!) {
+    deleteUserWorkExperience(id: $id)
+  }
+`;
+
+export const CreateUserWorkExperience = gql`
+  mutation createUserWE(
+    $userId: Int!
+    $institution: String
+    $description: String
+    $startDate: String
+    $endDate: String
+  ) {
+    createUserWorkExperience(
+      userId: $userId
+      institution: $institution
+      description: $description
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      institution
+      description
+      startDate
+      endDate
+      id
+    }
+  }
+`;
+
+export const UpdateUserWorkExperience = gql`
+  mutation updateUserWE(
+    $id: Int!
+    $institution: String
+    $description: String
+    $userId: Int
+    $startDate: String
+    $endDate: String
+  ) {
+    updateUserWorkExperience(
+      id: $id
+      institution: $institution
+      description: $description
+      userId: $userId
+      startDate: $startDate
+      endDate: $endDate
+    ) {
+      id
+      institution
+      description
+      startDate
+      endDate
+    }
+  }
+`;
