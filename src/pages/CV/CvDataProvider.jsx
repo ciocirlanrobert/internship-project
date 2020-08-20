@@ -2,10 +2,11 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Education from "./Education/Education";
 import { makeStyles } from "@material-ui/core";
-import { Educations, UserWorkExperiences } from "../../queries";
+import { Educations, UserWorkExperiences, UserSkills } from "../../queries";
 import { useUserContext } from "../../context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import WorkExperience from "./WorkExperience/WorkExperience";
+import Skills from "./Skills/Skills";
 
 const useStyle = makeStyles({
   mainInfo: {
@@ -36,12 +37,20 @@ export default function CvDataProvider() {
     },
   });
 
+  const { data: queriedSkills } = useQuery(UserSkills, {
+    variables: {
+      id: user.id,
+    },
+  });
+
   const educations =
     (queriedEducations && queriedEducations.user.userEducations) || [];
 
   const workExperience =
     (queriedWorkExperience && queriedWorkExperience.user.userWorkExperiences) ||
     [];
+
+  const skills = (queriedSkills && queriedSkills.user.userSkills) || [];
 
   return (
     <>
@@ -50,6 +59,9 @@ export default function CvDataProvider() {
       </Container>
       <Container maxWidth="md" className={style.mainInfo} component="main">
         <WorkExperience jobs={workExperience} />
+      </Container>
+      <Container maxWidth="md" className={style.mainInfo} component="main">
+        <Skills skills={skills} />
       </Container>
     </>
   );

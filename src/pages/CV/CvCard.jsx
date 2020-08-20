@@ -196,7 +196,6 @@ export default function CvCard(props) {
 
   return (
     <Card className={style.root}>
-      {console.log(props.id)}
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.institution}

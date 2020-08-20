@@ -167,3 +167,20 @@ export const UpdateUserWorkExperience = gql`
     }
   }
 `;
+
+export const DeleteUserSkill = gql`
+  mutation deleteUserSkill($id: [Int!]!) {
+    deleteUserSkill(id: $id)
+  }
+`;
+
+export const CreateUserSkill = gql`
+  mutation createUserSkill($id: Int!, $skillId: Int!, $rating: Int!) {
+    createUserSkill(userId: $id, skillId: $skillId, rating: $rating) {
+      skill {
+        id
+      }
+      rating
+    }
+  }
+`;

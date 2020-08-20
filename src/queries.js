@@ -55,3 +55,27 @@ export const UserWorkExperiences = gql`
     }
   }
 `;
+
+export const UserSkills = gql`
+  query userSkills($id: Int!) {
+    user(id: $id) {
+      userSkills {
+        id
+        rating
+        skill {
+          name
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const Skills = gql`
+  query skills {
+    skills {
+      name
+      id
+    }
+  }
+`;
