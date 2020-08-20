@@ -86,6 +86,7 @@ export default function SkillsSection({ title, data }) {
       <h1 className={style.sectionTitle}>{title}</h1>
       <Modal open={open} onClose={handleEditClose}>
         <SkillsForm
+          onClose={open}
           mutation={CreateUserSkill}
           id={user.id}
           specificQuery={UserSkills}
@@ -96,7 +97,7 @@ export default function SkillsSection({ title, data }) {
           data.map((item) => (
             <SkillCard
               name={item.skill.name}
-              skillId={item.skill.id}
+              skillId={item.id}
               key={item.id}
               userId={user.id}
               rating={item.rating}
