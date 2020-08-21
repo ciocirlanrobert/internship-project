@@ -13,6 +13,7 @@ import LandingPage from "./Components/LandingPage";
 import { useUserContext } from "./context/UserContext";
 import Restricted from "./Components/Restricted";
 import MyProfile from "./pages/MyProfile";
+import Admin from "./pages/Admin Dashboard/Admin";
 
 export default function RouteHandler() {
   const { user } = useUserContext();
@@ -35,6 +36,7 @@ export default function RouteHandler() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/" component={WelcomePage} />
         <Route exact path="/restricted" component={Restricted} />
+        <Route exact path="/admin" component={Admin} />
         {
           // &&
           true &&

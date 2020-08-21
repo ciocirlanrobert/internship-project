@@ -184,3 +184,60 @@ export const CreateUserSkill = gql`
     }
   }
 `;
+
+export const UpdateUser = gql`
+  mutation UpdateUser(
+    $id: Int!
+    $username: String
+    $firstName: String
+    $lastName: String
+    $password: String
+  ) {
+    updateUser(
+      id: $id
+      lastName: $lastName
+      firstName: $firstName
+      password: $password
+      username: $username
+    ) {
+      id
+      username
+      firstName
+      lastName
+      password
+    }
+  }
+`;
+
+export const DeleteUser = gql`
+  mutation deleteUser($id: [Int!]!) {
+    deleteUser(id: $id)
+  }
+`;
+
+export const AddUser = gql`
+  mutation addUser(
+    $username: String!
+    $firstName: String!
+    $lastName: String!
+    $password: String!
+    $userRoleId: Int!
+  ) {
+    createUser(
+      username: $username
+      firstName: $firstName
+      lastName: $lastName
+      password: $password
+      userRoleId: $userRoleId
+    ) {
+      id
+      username
+      firstName
+      lastName
+      password
+      userRole {
+        id
+      }
+    }
+  }
+`;

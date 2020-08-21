@@ -79,3 +79,18 @@ export const Skills = gql`
     }
   }
 `;
+
+export const Users = gql`
+  query Users {
+    users {
+      firstName
+      lastName
+      username
+      password
+      id
+      userRole {
+        id
+      }
+    }
+  }
+`;
