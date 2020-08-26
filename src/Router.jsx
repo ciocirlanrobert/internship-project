@@ -14,7 +14,7 @@ import { useUserContext } from "./context/UserContext";
 import Restricted from "./Components/Restricted";
 import MyProfile from "./pages/MyProfile";
 import Admin from "./pages/Admin Dashboard/Admin";
-
+import Company from "./pages/Company Dashboard/Company";
 export default function RouteHandler() {
   const { user } = useUserContext();
 
@@ -37,6 +37,7 @@ export default function RouteHandler() {
         <Route exact path="/" component={WelcomePage} />
         <Route exact path="/restricted" component={Restricted} />
         <Route exact path="/admin" component={Admin} />
+        <Route exact path="/company" component={Company} />
         {
           // &&
           true &&

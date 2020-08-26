@@ -241,3 +241,30 @@ export const AddUser = gql`
     }
   }
 `;
+
+export const UpdateJobInfo = gql`
+  mutation updateJobInfo(
+    $id: Int!
+    $name: String
+    $description: String
+    $isAvailable: Boolean
+  ) {
+    updateJob(
+      id: $id
+      name: $name
+      description: $description
+      isAvailable: $isAvailable
+    ) {
+      id
+      name
+      description
+      isAvailable
+    }
+  }
+`;
+
+export const DeleteJob = gql`
+  mutation deleteJob($id: Int!) {
+    deleteJob(id: $id)
+  }
+`;

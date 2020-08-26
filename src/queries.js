@@ -94,3 +94,36 @@ export const Users = gql`
     }
   }
 `;
+
+export const Jobs = gql`
+  query jobs {
+    jobs {
+      id
+      isAvailable
+      name
+      description
+      company {
+        name
+        user {
+          id
+        }
+      }
+      jobRequirements {
+        id
+        name
+      }
+      jobBenefits {
+        id
+        name
+      }
+      jobSkills {
+        id
+        rating
+        skill {
+          id
+          name
+        }
+      }
+    }
+  }
+`;

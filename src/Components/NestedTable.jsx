@@ -1,8 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
-import NestedTable from "../Components/NestedTable";
 
-export default function CRUDTable({
+export default function NestedTable({
   columns,
   tableData,
   updateRow,
@@ -21,41 +20,6 @@ export default function CRUDTable({
 
   return (
     <MaterialTable
-      detailPanel={(rowData) => {
-        const nestedRequirements = rowData.jobRequirements.data.map((item) => ({
-          id: item.id,
-          name: item.name,
-        }));
-        const nestedBenefits = rowData.jobBenefits.data.map((item) => ({
-          id: item.id,
-          name: item.name,
-        }));
-        const nestedSkills = rowData.jobSkills.data.map((item) => ({
-          jobId: item.id,
-          name: item.skill.name,
-          skillId: item.skill.id,
-          rating: item.rating,
-        }));
-        return (
-          <>
-            <NestedTable
-              columns={rowData.jobRequirements.columns}
-              tableData={nestedRequirements}
-              title="Job requirements"
-            />
-            <NestedTable
-              columns={rowData.jobBenefits.columns}
-              tableData={nestedBenefits}
-              title="Job Benefits"
-            />
-            <NestedTable
-              columns={rowData.jobSkills.columns}
-              tableData={nestedSkills}
-              title="Job Skills"
-            />
-          </>
-        );
-      }}
       title={title}
       columns={state.columns}
       data={state.data}

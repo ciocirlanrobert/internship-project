@@ -54,12 +54,12 @@ export default function UsersTable() {
       {users.length > 0 && (
         <CRUDTable
           columns={columns}
-          users={tableData}
-          refetch={Users}
+          tableData={tableData}
           updateRow={updateUser}
           deleteRow={deleteUser}
           addRow={addUser}
           makeInt={"userRoleId"}
+          actualName={"userRole.id"}
         />
       )}
     </>
