@@ -13,6 +13,7 @@ export default function CRUDTable({
   makeBool,
   detail,
   title,
+  jobRequirement,
 }) {
   const [state, setState] = React.useState({
     columns: columns,
@@ -25,6 +26,7 @@ export default function CRUDTable({
         const nestedRequirements = rowData.jobRequirements.data.map((item) => ({
           id: item.id,
           name: item.name,
+          jobId: rowData.id,
         }));
         const nestedBenefits = rowData.jobBenefits.data.map((item) => ({
           id: item.id,
@@ -42,16 +44,22 @@ export default function CRUDTable({
               columns={rowData.jobRequirements.columns}
               tableData={nestedRequirements}
               title="Job requirements"
+              updateRow={jobRequirement.update}
+              deleteRow={jobRequirement.delete}
+              addRow={jobRequirement.add}
+              id="true"
             />
             <NestedTable
               columns={rowData.jobBenefits.columns}
               tableData={nestedBenefits}
               title="Job Benefits"
+              id="true"
             />
             <NestedTable
               columns={rowData.jobSkills.columns}
               tableData={nestedSkills}
               title="Job Skills"
+              id="true"
             />
           </>
         );
@@ -64,14 +72,14 @@ export default function CRUDTable({
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
+              const variables = { ...newData };
+              delete variables.tableData;
+              variables[makeInt] = +variables[makeInt];
+              variables[makeBool] = variables[makeBool] === "true";
+              addRow({ variables: variables });
               setState((prevState) => {
                 const data = [...prevState.data];
                 data.push(newData);
-                const variables = { ...newData };
-                delete variables.tableData;
-                variables[makeInt] = +variables[makeInt];
-                variables[makeBool] = variables[makeBool] === "true";
-                addRow({ variables: variables });
                 return { ...prevState, data };
               });
             }, 600);
@@ -80,14 +88,15 @@ export default function CRUDTable({
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
+              const variables = { ...newData };
+              variables[makeBool] = variables[makeBool] === "true";
+              delete variables.tableData;
+              updateRow({ variables: variables });
               if (oldData) {
                 setState((prevState) => {
                   const data = [...prevState.data];
                   data[data.indexOf(oldData)] = newData;
-                  const variables = { ...newData };
-                  variables[makeBool] = variables[makeBool] === "true";
-                  delete variables.tableData;
-                  updateRow({ variables: variables });
+
                   return { ...prevState, data };
                 });
               }
@@ -97,13 +106,14 @@ export default function CRUDTable({
           new Promise((resolve) => {
             setTimeout(() => {
               resolve();
+              const variables = { id: oldData.id };
+              deleteRow({
+                variables: variables,
+              });
               setState((prevState) => {
                 const data = [...prevState.data];
                 data.splice(data.indexOf(oldData), 1);
-                const variables = { id: oldData.id };
-                deleteRow({
-                  variables: variables,
-                });
+
                 return { ...prevState, data };
               });
             }, 600);
