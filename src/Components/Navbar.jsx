@@ -39,7 +39,15 @@ export default function Navbar() {
   const { user } = useUserContext();
 
   const handleClick = () => {
-    user.username ? history.push("/myProfile") : history.push("login");
+    if (user.id == 2) {
+      history.push("/company");
+    } else {
+      history.push("/admin");
+    }
+  };
+
+  const handleMyAccount = () => {
+    user.username ? history.push("/myProfile") : history.push("/login");
   };
 
   return (
@@ -58,8 +66,13 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             RoJ Hiring
           </Typography>
-          <Button color="inherit" onClick={handleClick}>
-            {user.username ? "My Account" : "Login"}
+          {user.id > 1 && (
+            <Button color="inherit" onClick={handleClick}>
+              Dashboard
+            </Button>
+          )}
+          <Button color="inherit" onClick={handleMyAccount}>
+            {user.username ? "My Profile" : "Log in"}
           </Button>
         </Toolbar>
       </AppBar>

@@ -1,7 +1,9 @@
 import React from "react";
 import MaterialTable from "material-table";
+import { CreateSkill } from "../../mutations";
+import { useMutation } from "@apollo/client";
 
-export default function NestedTable({
+export default function SkillsTable({
   columns,
   tableData,
   updateRow,
@@ -19,6 +21,38 @@ export default function NestedTable({
     columns: columns,
     data: tableData,
   });
+
+  const [createSkill, { data }] = useMutation(CreateSkill);
+
+  const addSKill = (skills, variables) => {
+    const skill = skills.find(
+      (element) =>
+        element.name.toLowerCase() === variables.variables.name.toLowerCase()
+    );
+
+    if (skill !== undefined) {
+      addRow({
+        variables: {
+          skillId: skill.id,
+          rating: variables.variables.rating,
+          jobId: variables.variables.jobId,
+        },
+      });
+    } else {
+      createSkill({ variables: { name: variables.variables.name } }).then(
+        (response) => {
+          console.log(response);
+          addRow({
+            variables: {
+              skillId: response.data.createSkill.id,
+              rating: variables.variables.rating,
+              jobId: variables.variables.jobId,
+            },
+          });
+        }
+      );
+    }
+  };
   return (
     <MaterialTable
       title={title}
@@ -41,7 +75,9 @@ export default function NestedTable({
               if (makeBool) {
                 variables[makeBool] = variables[makeBool] === "true";
               }
-              addRow({ variables: variables });
+              const skills = (tableData[0] && tableData[0].skills) || [];
+
+              addSKill(skills, { variables: variables });
               setState((prevState) => {
                 const data = [...prevState.data];
                 data.push(newData);

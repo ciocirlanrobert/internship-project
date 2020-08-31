@@ -268,3 +268,99 @@ export const DeleteJob = gql`
     deleteJob(id: $id)
   }
 `;
+
+export const UpdateJobRequirement = gql`
+  mutation updateJobRequirement($id: Int!, $name: String) {
+    updateJobRequirement(id: $id, name: $name) {
+      id
+      name
+    }
+  }
+`;
+
+export const DeleteJobRequirement = gql`
+  mutation deleteJobRequirement($id: Int!) {
+    deleteJobRequirement(id: $id)
+  }
+`;
+
+export const CreateJobRequirement = gql`
+  mutation createJobRequirement($name: String!, $jobId: Int!) {
+    createJobRequirement(jobId: $jobId, name: $name) {
+      id
+      name
+    }
+  }
+`;
+
+export const UpdateJobBenefit = gql`
+  mutation updateJobBenefit($id: Int!, $name: String!, $jobId: Int!) {
+    updateJobBenefit(id: $id, name: $name, jobId: $jobId) {
+      id
+      name
+    }
+  }
+`;
+
+export const DeleteJobBenefit = gql`
+  mutation deleteJobBenefit($id: Int!) {
+    deleteJobBenefit(id: $id)
+  }
+`;
+
+export const CreateJobBenefit = gql`
+  mutation createJobBenefit($name: String!, $jobId: Int!) {
+    createJobBenefit(name: $name, jobId: $jobId) {
+      name
+      id
+    }
+  }
+`;
+
+export const UpdateJobSkill = gql`
+  mutation updateJobSkill($id: Int!, $rating: Int) {
+    updateJobSkill(id: $id, rating: $rating) {
+      rating
+    }
+  }
+`;
+
+export const DeleteJobSkill = gql`
+  mutation deleteJobSkill($id: Int!) {
+    deleteJobSkill(id: $id)
+  }
+`;
+
+export const CreateJobSkill = gql`
+  mutation createJobSkill($skillId: Int!, $rating: Int!, $jobId: Int!) {
+    createJobSkill(skillId: $skillId, rating: $rating, jobId: $jobId) {
+      rating
+    }
+  }
+`;
+
+export const CreateSkill = gql`
+  mutation createSkill($name: String!) {
+    createSkill(name: $name) {
+      id
+    }
+  }
+`;
+
+export const CreateJob = gql`
+  mutation createJob(
+    $name: String!
+    $description: String
+    $isAvailable: Boolean
+    $companyId: Int!
+  ) {
+    createJob(
+      name: $name
+      description: $description
+      isAvailable: $isAvailable
+      companyId: $companyId
+    ) {
+      id
+    }
+  }
+`;

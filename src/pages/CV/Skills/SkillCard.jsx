@@ -48,7 +48,6 @@ export default function SkillCard({ name, skillId, userId, rating }) {
     <div className={style.skillContainer}>
       <Box component="fieldset" mb={3} borderColor="transparent">
         <Rating name="read-only" value={rating} readOnly />
-        {console.log(skillId, name)}
       </Box>
       <li>
         <Chip label={name} onDelete={handleDelete} className={style.chip} />

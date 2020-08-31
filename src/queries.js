@@ -127,3 +127,15 @@ export const Jobs = gql`
     }
   }
 `;
+
+export const Companies = gql`
+  query getCompanies {
+    companies {
+      name
+      id
+      user {
+        id
+      }
+    }
+  }
+`;
