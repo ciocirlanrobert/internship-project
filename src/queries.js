@@ -139,3 +139,52 @@ export const Companies = gql`
     }
   }
 `;
+
+export const Job = gql`
+  query job($id: Int!) {
+    job(id: $id) {
+      id
+      name
+      description
+      company {
+        id
+        name
+      }
+      jobSkills {
+        rating
+        skill {
+          name
+          id
+        }
+      }
+      jobBenefits {
+        id
+        name
+      }
+      jobRequirements {
+        id
+        name
+      }
+    }
+  }
+`;
+
+export const JobApplications = gql`
+  query userJobApplications {
+    userJobApplications {
+      id
+      isAccepted
+      user {
+        id
+      }
+      job {
+        id
+        name
+        company {
+          name
+          id
+        }
+      }
+    }
+  }
+`;

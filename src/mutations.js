@@ -364,3 +364,11 @@ export const CreateJob = gql`
     }
   }
 `;
+
+export const CreateJobApplication = gql`
+  mutation createUserJobApplication($userId: Int!, $jobId: Int!) {
+    createUserJobApplication(userId: $userId, jobId: $jobId) {
+      id
+    }
+  }
+`;

@@ -8,7 +8,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import Banner from "../images/landingBanner.jpg";
-import Jobs from "./Jobs";
+import JobsContainer from "./Jobs";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -72,7 +72,7 @@ export default function LandingPage() {
       </div>
       <div className={style.jobsContainer}>
         <h1>Open jobs</h1>
-        <Jobs />
+        <JobsContainer />
       </div>
       <Footer />
     </>

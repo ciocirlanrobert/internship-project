@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import JobCard from "./JobCard";
 import { makeStyles } from "@material-ui/core/styles";
+import { Jobs } from "../queries";
 
 const useStyles = makeStyles({
   jobsContainer: {
@@ -12,39 +13,32 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Jobs() {
-  const JOBS = gql`
-    query jobs {
-      jobs {
-        id
-        description
-        name
-        isAvailable
-        company {
-          name
-        }
-      }
-    }
-  `;
-
-  const { data } = useQuery(JOBS);
+export default function JobsContainer() {
+  const { data } = useQuery(Jobs, {
+    fetchPolicy: "no-cache",
+  });
   const style = useStyles();
 
   return (
-    <React.Fragment>
+    <>
       <div className={style.jobsContainer}>
         {data &&
           data.jobs
             .filter((job) => job.isAvailable === true)
             .map((availableJob) => (
               <JobCard
+                id={availableJob.id}
                 key={availableJob.id}
                 name={availableJob.name}
                 description={availableJob.description}
                 company={availableJob.company.name}
+                isAvailable="true"
+                jobRequirements={availableJob.jobRequirements}
+                jobBenefits={availableJob.jobBenefits}
+                jobSkills={availableJob.jobSkills}
               />
             ))}
       </div>
-    </React.Fragment>
+    </>
   );
 }
