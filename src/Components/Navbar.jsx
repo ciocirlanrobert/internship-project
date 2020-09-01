@@ -66,7 +66,7 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             RoJ Hiring
           </Typography>
-          {user.id > 1 && (
+          {user.userRoleId > 1 && (
             <Button color="inherit" onClick={handleClick}>
               Dashboard
             </Button>
