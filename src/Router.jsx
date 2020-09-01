@@ -15,7 +15,7 @@ import Restricted from "./Components/Restricted";
 import MyProfile from "./pages/MyProfile";
 import Admin from "./pages/Admin Dashboard/Admin";
 import Company from "./pages/Company Dashboard/Company";
-import JobDetail from "./pages/Job Detail/JobDetail";
+import JobDetail from "./pages/JobDetail/JobDetail";
 export default function RouteHandler() {
   const { user } = useUserContext();
 
