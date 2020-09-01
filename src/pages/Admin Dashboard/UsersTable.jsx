@@ -2,8 +2,13 @@ import React from "react";
 import CRUDTable from "../../Components/CRUDTable";
 import { useQuery, useMutation } from "@apollo/client";
 import { Users } from "../../queries";
-import { UpdateUser, DeleteUser, AddUser } from "../../mutations";
-
+import {
+  UpdateUser,
+  DeleteUser,
+  AddUser,
+  CreateContactInfo,
+  UpdateUserContactInfo,
+} from "../../mutations";
 export default function UsersTable() {
   const { data } = useQuery(Users);
   const [updateUser, { data: returnedUser }] = useMutation(UpdateUser);
@@ -22,6 +27,37 @@ export default function UsersTable() {
       },
     ],
   });
+
+  const [createContactinfo, { data: contactInfo }] = useMutation(
+    CreateContactInfo
+  );
+  const [updateMockContactInfo, { data: contactInfoData }] = useMutation(
+    UpdateUserContactInfo
+  );
+
+  const addRow = (variables) => {
+    addUser(variables).then((response) => {
+      const userId = response.data.createUser.id;
+      createContactinfo({
+        variables: {
+          email: "",
+          phone: "",
+          city: "",
+          website: "",
+          avatarUrl: "",
+          about: "",
+          countryId: 3,
+        },
+      }).then((response) => {
+        updateMockContactInfo({
+          variables: {
+            id: userId,
+            contactInfoId: response.data.createContactInfo.id,
+          },
+        });
+      });
+    });
+  };
 
   const users = (data && data.users) || [];
   const columns = [
@@ -57,7 +93,7 @@ export default function UsersTable() {
           tableData={tableData}
           updateRow={updateUser}
           deleteRow={deleteUser}
-          addRow={addUser}
+          addRow={addRow}
           makeInt={"userRoleId"}
           actualName={"userRole.id"}
         />
