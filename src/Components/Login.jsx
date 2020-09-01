@@ -40,6 +40,9 @@ export default function Login() {
         contactInfo {
           id
         }
+        userRole {
+          id
+        }
       }
     }
   `;
@@ -56,7 +59,7 @@ export default function Login() {
         updateUsername(username);
         updateFirstname(data.users[index].firstName);
         updateLastname(data.users[index].lastName);
-        updateUserRoleId(3);
+        updateUserRoleId(data.users[index].userRole.id);
         updateId(data.users[index].id);
         updateContactInfoId(data.users[index].contactInfo.id);
 
