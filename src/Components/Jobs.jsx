@@ -14,15 +14,13 @@ const useStyles = makeStyles({
 });
 
 export default function JobsContainer() {
-  const { data } = useQuery(Jobs, {
-    fetchPolicy: "no-cache",
-  });
+  const { data } = useQuery(Jobs);
   const style = useStyles();
 
   return (
     <>
       <div className={style.jobsContainer}>
-        {data &&
+        {data !== undefined &&
           data.jobs
             .filter((job) => job.isAvailable === true)
             .map((availableJob) => (
@@ -31,7 +29,7 @@ export default function JobsContainer() {
                 key={availableJob.id}
                 name={availableJob.name}
                 description={availableJob.description}
-                company={availableJob.company.name}
+                companyName={availableJob.company.name}
                 isAvailable="true"
                 jobRequirements={availableJob.jobRequirements}
                 jobBenefits={availableJob.jobBenefits}

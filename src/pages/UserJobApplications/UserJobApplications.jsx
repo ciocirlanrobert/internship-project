@@ -25,7 +25,7 @@ export default function UserJobApplications() {
       title: "Status",
       field: "status",
       cellStyle: (rowData) => ({
-        backgroundColor: rowData.status === true ? "green" : "red",
+        backgroundColor: rowData.status === "true" ? "green" : "red",
       }),
     },
   ];

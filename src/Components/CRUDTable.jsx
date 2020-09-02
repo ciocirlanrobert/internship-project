@@ -23,7 +23,7 @@ export default function CRUDTable({
     columns: columns,
     data: tableData,
   });
-  console.log(companyId);
+
   return (
     <MaterialTable
       detailPanel={(rowData) => {
@@ -45,9 +45,6 @@ export default function CRUDTable({
           jobId: rowData.id,
           skills: jobSkill.skills,
         }));
-
-        console.log(rowData);
-
         return (
           <>
             <NestedTable

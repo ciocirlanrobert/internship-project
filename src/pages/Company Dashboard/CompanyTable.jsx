@@ -2,6 +2,8 @@ import React from "react";
 import CRUDTable from "../../Components/CRUDTable";
 import { useQuery, useMutation } from "@apollo/client";
 import { Jobs, Companies } from "../../queries";
+import { makeStyles } from "@material-ui/core";
+import Footer from "../../Components/Footer";
 import {
   UpdateJobInfo,
   DeleteJob,
@@ -17,14 +19,28 @@ import {
   CreateJob,
 } from "../../mutations";
 import { useUserContext } from "../../context/UserContext";
-
 import { Skills } from "../../queries";
+
+const useStyle = makeStyles({
+  root: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
+
+  tableContainer: {
+    margin: 20,
+  },
+});
 
 export default function CompanyTable() {
   const { user } = useUserContext();
   const { data } = useQuery(Jobs);
   const { data: queriedSkills } = useQuery(Skills);
   const { data: queriedCompanies } = useQuery(Companies);
+  const style = useStyle();
+
   const [updateJobInfo, { data: returnedJobInfo }] = useMutation(UpdateJobInfo);
   const [deleteJob, { data: returnedDelete }] = useMutation(DeleteJob, {
     refetchQueries: [
@@ -139,7 +155,7 @@ export default function CompanyTable() {
   const columns = [
     { title: "Name", field: "name" },
     { title: "Description", field: "description" },
-    { title: "Company", field: "companyName", editable: {} },
+    { title: "Company", field: "companyName", editable: null },
     {
       title: "Availability",
       field: "isAvailable",
@@ -183,30 +199,6 @@ export default function CompanyTable() {
     },
   ];
 
-  const company = companies.find((element) => element.user.id === user.id);
-
-  const tableData = jobs
-    .filter((item) => item.company.name === company.name)
-    .map((item) => ({
-      name: item.name,
-      description: item.description,
-      companyName: item.company.name,
-      isAvailable: item.isAvailable,
-      id: item.id,
-      jobRequirements: {
-        data: item.jobRequirements,
-        columns: jobRequirementsColumns,
-      },
-      jobBenefits: {
-        data: item.jobBenefits,
-        columns: jobBenefitsColumns,
-      },
-      jobSkills: {
-        data: item.jobSkills,
-        columns: jobSkillsColumns,
-      },
-    }));
-
   const jobRequirementCRUD = {
     update: updateJobRequirement,
     delete: deleteJobRequirement,
@@ -226,21 +218,54 @@ export default function CompanyTable() {
     skills: skills,
   };
 
+  const company = companies.find((element) => element.user.id === user.id);
+
+  const tableData =
+    company &&
+    jobs
+      .filter((item) => item.company.name === company.name)
+      .map((item) => ({
+        name: item.name,
+        description: item.description,
+        companyName: item.company.name,
+        isAvailable: item.isAvailable,
+        id: item.id,
+        jobRequirements: {
+          data: item.jobRequirements,
+          columns: jobRequirementsColumns,
+        },
+        jobBenefits: {
+          data: item.jobBenefits,
+          columns: jobBenefitsColumns,
+        },
+        jobSkills: {
+          data: item.jobSkills,
+          columns: jobSkillsColumns,
+        },
+      }));
+
   return (
-    jobs.length > 0 && (
-      <CRUDTable
-        title="Jobs"
-        columns={columns}
-        tableData={tableData}
-        updateRow={updateJobInfo}
-        deleteRow={deleteJob}
-        addRow={createJob}
-        makeBool={"isAvailable"}
-        jobRequirement={jobRequirementCRUD}
-        jobBenefit={jobBenefitCRUD}
-        jobSkill={jobSkillCRUD}
-        companyId={company.id}
-      />
-    )
+    <div className={style.root}>
+      {jobs.length > 0 && company !== undefined && (
+        <>
+          <div className={style.tableContainer}>
+            <CRUDTable
+              title="Jobs"
+              columns={columns}
+              tableData={tableData}
+              updateRow={updateJobInfo}
+              deleteRow={deleteJob}
+              addRow={createJob}
+              makeBool={"isAvailable"}
+              jobRequirement={jobRequirementCRUD}
+              jobBenefit={jobBenefitCRUD}
+              jobSkill={jobSkillCRUD}
+              companyId={company.id}
+            />
+          </div>
+          <Footer />
+        </>
+      )}
+    </div>
   );
 }

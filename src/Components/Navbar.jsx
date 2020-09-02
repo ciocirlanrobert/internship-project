@@ -50,6 +50,14 @@ export default function Navbar() {
     user.username ? history.push("/myProfile") : history.push("/login");
   };
 
+  const handleApplications = () => {
+    history.push("/applications");
+  };
+
+  const handleCompanyApplications = () => {
+    history.push("/applicants");
+  };
+
   return (
     <div className={classes.root}>
       <AppBar position="static" className={classes.navbar}>
@@ -66,6 +74,16 @@ export default function Navbar() {
           <Typography variant="h6" className={classes.title}>
             RoJ Hiring
           </Typography>
+          {user.userRoleId === 2 && (
+            <Button color="inherit" onClick={handleCompanyApplications}>
+              Job Applicants
+            </Button>
+          )}
+          {user.userRoleId === 1 && (
+            <Button color="inherit" onClick={handleApplications}>
+              My applications
+            </Button>
+          )}
           {user.userRoleId > 1 && (
             <Button color="inherit" onClick={handleClick}>
               Dashboard

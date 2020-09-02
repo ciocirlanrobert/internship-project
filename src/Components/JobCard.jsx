@@ -24,15 +24,13 @@ const useStyles = makeStyles({
 export default function JobCard({
   name,
   description,
-  company,
+  companyName,
   id,
   jobRequirements,
   jobBenefits,
   jobSkills,
 }) {
   const style = useStyles();
-
-  console.log("job req", jobRequirements);
 
   return (
     <Card className={style.root}>
@@ -50,7 +48,7 @@ export default function JobCard({
             {description}
           </Typography>
           <Typography variant="body2" component="p">
-            {company}
+            {companyName}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -65,7 +63,7 @@ export default function JobCard({
                 jobSkills: jobSkills,
                 name: name,
                 description: description,
-                company: company,
+                companyName: companyName,
               },
             }}
           >
