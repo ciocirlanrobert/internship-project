@@ -16,6 +16,9 @@ import MyProfile from "./pages/MyProfile";
 import Admin from "./pages/Admin Dashboard/Admin";
 import Company from "./pages/Company Dashboard/Company";
 import JobDetail from "./pages/JobDetail/JobDetail";
+import UserJobApplications from "./pages/UserJobApplications/UserJobApplications";
+import CompanyJobApplications from "./pages/CompanyJobApplications/CompanyJobApplications";
+
 export default function RouteHandler() {
   const { user } = useUserContext();
 
@@ -40,6 +43,8 @@ export default function RouteHandler() {
         <Route exact path="/admin" component={Admin} />
         <Route exact path="/company" component={Company} />
         <Route path="/jobs/:id" component={JobDetail} />
+        <Route exact path="/applications" component={UserJobApplications} />
+        <Route exact path="/applicants" component={CompanyJobApplications} />
         {
           // &&
           true &&

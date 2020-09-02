@@ -4,6 +4,7 @@ export const UserContactInfo = gql`
   query userContactInfo($id: Int!) {
     user(id: $id) {
       contactInfo {
+        id
         email
         phone
         city
@@ -103,6 +104,7 @@ export const Jobs = gql`
       name
       description
       company {
+        id
         name
         user {
           id
@@ -129,7 +131,7 @@ export const Jobs = gql`
 `;
 
 export const Companies = gql`
-  query getCompanies {
+  query companies {
     companies {
       name
       id
@@ -151,6 +153,7 @@ export const Job = gql`
         name
       }
       jobSkills {
+        id
         rating
         skill {
           name
@@ -176,6 +179,39 @@ export const JobApplications = gql`
       isAccepted
       user {
         id
+        firstName
+        lastName
+        userEducations {
+          id
+          institution
+          description
+        }
+        userWorkExperiences {
+          id
+          institution
+          description
+        }
+        userSkills {
+          id
+          rating
+          skill {
+            id
+            name
+          }
+        }
+        contactInfo {
+          id
+          email
+          phone
+          city
+          website
+          avatarUrl
+          about
+          country {
+            name
+            id
+          }
+        }
       }
       job {
         id

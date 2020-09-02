@@ -372,3 +372,12 @@ export const CreateJobApplication = gql`
     }
   }
 `;
+
+export const UpdateJobApplication = gql`
+  mutation updateJobApplication($id: Int!, $isAccepted: Boolean) {
+    updateUserJobApplication(id: $id, isAccepted: $isAccepted) {
+      id
+      isAccepted
+    }
+  }
+`;
