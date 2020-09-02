@@ -89,6 +89,7 @@ export default function UsersTable() {
     <>
       {users.length > 0 && (
         <CRUDTable
+          title="Users"
           columns={columns}
           tableData={tableData}
           updateRow={updateUser}
