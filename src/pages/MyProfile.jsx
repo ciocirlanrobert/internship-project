@@ -8,8 +8,15 @@ import { useUserContext } from "../context/UserContext";
 import Container from "@material-ui/core/Container";
 import GeneralInfo from "../Components/GeneralInfo";
 import CV from "./CV/CV";
+import Footer from "../Components/Footer";
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    height: "100vh",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  },
   large: {
     width: theme.spacing(12),
     height: theme.spacing(12),
@@ -63,7 +70,7 @@ export default function MyProfile() {
   const { user } = useUserContext();
 
   return (
-    <>
+    <div className={style.root}>
       <div className={style.hero}>
         <div className={style.heroNavbar}>
           <IconButton
@@ -96,6 +103,7 @@ export default function MyProfile() {
         <GeneralInfo />
       </Container>
       <CV />
-    </>
+      <Footer />
+    </div>
   );
 }
