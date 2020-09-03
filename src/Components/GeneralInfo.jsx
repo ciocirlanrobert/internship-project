@@ -9,6 +9,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import Select from "@material-ui/core/Select";
 import { Countries } from "../queries";
 import { MenuItem } from "@material-ui/core";
+import MaterialTable from "material-table";
 
 const useStyle = makeStyles({
   generalInfo: {
@@ -31,138 +32,111 @@ const useStyle = makeStyles({
   },
 });
 
-const contactInfo = ["Email", "Phone", "Website", "City", "Avatar"];
-const about = "test about";
-
 export default function GeneralInfo() {
   const style = useStyle();
   const { user } = useUserContext();
 
-  const [generalInfo, setGeneralInfo] = useState({
-    Email: "",
-    Phone: "",
-    Website: "",
-    City: "",
-    Country: -1,
-    Avatar: "",
-  });
-  const [countries, setCountries] = useState([]);
-  const [countryId, setCountryId] = useState(generalInfo.Country);
-
   const [updateContactInfo, { data: contactInfoData }] = useMutation(
-    UpdateContactInfo
+    UpdateContactInfo,
+    {
+      refetchQueries: [{ query: UserContactInfo }],
+    }
   );
 
   const { data: querriedContactInfo } = useQuery(UserContactInfo, {
     variables: {
       id: user.id,
     },
-    fetchPolicy: "network-only",
-    onCompleted: () => {
-      const {
-        about,
-        avatarUrl,
-        city,
-        country,
-        email,
-        phone,
-        website,
-      } = querriedContactInfo.user.contactInfo;
-
-      const auxContactInfo = {
-        Email: email,
-        Phone: phone,
-        Website: website,
-        City: city,
-        Country: country.id,
-        Avatar: avatarUrl,
-      };
-
-      setGeneralInfo(auxContactInfo);
-    },
   });
 
-  const { data: querriedCountries } = useQuery(Countries, {
-    onCompleted: () => {
-      setCountries(querriedCountries.counties);
+  const { data: querriedCountries } = useQuery(Countries);
+
+  const contactInfo =
+    (querriedContactInfo && querriedContactInfo.user.contactInfo) || [];
+
+  const lookup = {};
+  const countries =
+    (querriedCountries &&
+      querriedCountries.counties.forEach((item) => {
+        lookup[item.id] = item.name;
+      })) ||
+    {};
+
+  console.log(countries);
+  const tableData = contactInfo && [
+    {
+      id: contactInfo.id,
+      about: contactInfo.about,
+      avatarUrl: contactInfo.avatarUrl,
+      city: contactInfo.city,
+      email: contactInfo.email,
+      phone: contactInfo.phone,
+      website: contactInfo.website,
     },
-  });
+  ];
 
-  const handleGeneralInfoSubmit = (event) => {
-    event.preventDefault();
-    updateContactInfo({
-      variables: {
-        email: generalInfo.Email,
-        phone: generalInfo.Phone,
-        city: generalInfo.City,
-        website: generalInfo.Website,
-        avatarUrl: generalInfo.Avatar,
-        about: about,
-        countryId: countryId,
-        id: user.contactInfoId,
-      },
-    });
-  };
+  const columns = [
+    {
+      title: "Email",
+      field: "email",
+    },
+    {
+      title: "Phone Number",
+      field: "phone",
+    },
+    {
+      title: "Website",
+      field: "website",
+    },
+    {
+      title: "Avatar",
+      field: "avatarUrl",
+    },
+    {
+      title: "City",
+      field: "city",
+    },
+    {
+      title: "About",
+      field: "about",
+    },
+    {
+      title: "Country",
+      field: "countryId",
+      lookup: lookup,
+    },
+  ];
 
-  const handleChange = (event) => {
-    setGeneralInfo({
-      ...generalInfo,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  const handleCountryChange = (event) => {
-    setCountryId(event.target.value);
-  };
-
-  console.log(generalInfo);
   return (
     <>
-      <h1 className={style.sectionTitle}>General Info</h1>
-      <form className={style.generalInfo} onSubmit={handleGeneralInfoSubmit}>
-        {generalInfo &&
-          contactInfo.map((item) => (
-            <div className={style.formRow} key={item}>
-              <label className={style.label}>{item}</label>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                name={item}
-                autoComplete="off"
-                autoFocus
-                onChange={handleChange}
-                defaultValue={generalInfo[item]}
-              />
-            </div>
-          ))}
-        {countries && generalInfo && (
-          <div className={style.formRow}>
-            <label className={style.label}>Country</label>
-            <Select
-              className={style.dropdown}
-              value={countryId > 0 ? countryId : generalInfo.Country}
-              onChange={handleCountryChange}
-            >
-              {countries.map((country) => (
-                <MenuItem key={country.id} value={country.id}>
-                  {country.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </div>
-        )}
-
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          color="primary"
-          id="submit"
-        >
-          Save changes
-        </Button>
-      </form>
+      {contactInfo && (
+        <MaterialTable
+          title="General Info"
+          columns={columns}
+          data={tableData}
+          editable={{
+            onRowUpdate: (newData, oldData) =>
+              new Promise((resolve) => {
+                setTimeout(() => {
+                  resolve();
+                  const variables = { ...newData };
+                  console.log(variables);
+                  updateContactInfo({
+                    variables: {
+                      about: variables.about,
+                      id: variables.id,
+                      avatarUrl: variables.avatarUrl,
+                      city: variables.city,
+                      email: variables.email,
+                      phone: variables.phone,
+                      website: variables.website,
+                    },
+                  });
+                }, 600);
+              }),
+          }}
+        />
+      )}
     </>
   );
 }
