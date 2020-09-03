@@ -9,6 +9,8 @@ import Container from "@material-ui/core/Container";
 import GeneralInfo from "../Components/GeneralInfo";
 import CV from "./CV/CV";
 import Footer from "../Components/Footer";
+import { User } from "../queries";
+import { useQuery } from "@apollo/client";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,42 +70,51 @@ export default function MyProfile() {
   const style = useStyles();
   const history = useHistory();
   const { user } = useUserContext();
+  const { data: queriedUser } = useQuery(User, {
+    variables: {
+      id: user.id,
+    },
+  });
 
   return (
-    <div className={style.root}>
-      <div className={style.hero}>
-        <div className={style.heroNavbar}>
-          <IconButton
-            edge="start"
-            className={style.menuButton}
-            color="inherit"
-            aria-label="menu"
-            onClick={() => {
-              history.push("/landingPage");
-            }}
-          >
-            <HomeIcon />
-          </IconButton>
-        </div>
-        <div className={style.heroContent}>
-          <div className={style.heroAvatar}>
-            <Avatar
-              alt="User"
-              src="/static/images/avatar/1.jpg"
-              className={style.large}
-            />
+    queriedUser !== undefined && (
+      <div className={style.root}>
+        <div className={style.hero}>
+          <div className={style.heroNavbar}>
+            <IconButton
+              edge="start"
+              className={style.menuButton}
+              color="inherit"
+              aria-label="menu"
+              onClick={() => {
+                history.push("/landingPage");
+              }}
+            >
+              <HomeIcon />
+            </IconButton>
           </div>
-          <h1 className={style.userName}>
-            {user.firstName + " " + user.lastName}
-          </h1>
-          <h3 className={style.email}>ciocirlan.r@mail.com</h3>
+          <div className={style.heroContent}>
+            <div className={style.heroAvatar}>
+              <Avatar
+                alt="User"
+                src={`${queriedUser.user.contactInfo.avatarUrl}`}
+                className={style.large}
+              />
+            </div>
+            <h1 className={style.userName}>
+              {queriedUser.user.firstName + " " + queriedUser.user.lastName}
+            </h1>
+            <h3 className={style.email}>
+              {queriedUser.user.contactInfo.email}
+            </h3>
+          </div>
         </div>
+        <Container maxWidth="md" className={style.mainInfo} component="main">
+          <GeneralInfo />
+        </Container>
+        <CV />
+        <Footer />
       </div>
-      <Container maxWidth="md" className={style.mainInfo} component="main">
-        <GeneralInfo />
-      </Container>
-      <CV />
-      <Footer />
-    </div>
+    )
   );
 }
