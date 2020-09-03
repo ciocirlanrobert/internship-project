@@ -34,18 +34,25 @@ export default function GeneralInfo() {
   const style = useStyle();
   const { user } = useUserContext();
 
-  const [updateContactInfo, { data: contactInfoData }] = useMutation(
-    UpdateContactInfo,
-    {
-      refetchQueries: [{ query: UserContactInfo }],
-    }
-  );
-
   const { data: querriedContactInfo } = useQuery(UserContactInfo, {
     variables: {
       id: user.id,
     },
   });
+
+  const [updateContactInfo, { data: contactInfoData }] = useMutation(
+    UpdateContactInfo,
+    {
+      refetchQueries: [
+        {
+          query: UserContactInfo,
+          variables: {
+            id: user.id,
+          },
+        },
+      ],
+    }
+  );
 
   const { data: querriedCountries } = useQuery(Countries);
 
@@ -60,7 +67,6 @@ export default function GeneralInfo() {
       })) ||
     {};
 
-  console.log(countries);
   const tableData = contactInfo && [
     {
       id: contactInfo.id,
@@ -118,7 +124,6 @@ export default function GeneralInfo() {
                 setTimeout(() => {
                   resolve();
                   const variables = { ...newData };
-                  console.log(variables);
                   updateContactInfo({
                     variables: {
                       about: variables.about,
