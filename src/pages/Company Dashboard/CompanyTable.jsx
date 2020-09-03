@@ -246,7 +246,7 @@ export default function CompanyTable() {
 
   return (
     <div className={style.root}>
-      {jobs.length > 0 && company !== undefined && (
+      {(company !== undefined && (
         <>
           <div className={style.tableContainer}>
             <CRUDTable
@@ -265,7 +265,7 @@ export default function CompanyTable() {
           </div>
           <Footer />
         </>
-      )}
+      )) || <CRUDTable title="Jobs" />}
     </div>
   );
 }

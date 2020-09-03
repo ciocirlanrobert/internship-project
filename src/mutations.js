@@ -381,3 +381,29 @@ export const UpdateJobApplication = gql`
     }
   }
 `;
+
+export const CreateCompany = gql`
+  mutation createCompany($name: String!, $userId: Int!, $contactInfoId: Int!) {
+    createCompany(name: $name, userId: $userId, contactInfoId: $contactInfoId) {
+      id
+    }
+  }
+`;
+
+export const UpdateCompany = gql`
+  mutation updateCompany(
+    $id: Int!
+    $name: String
+    $userId: Int
+    $contactInfoId: Int
+  ) {
+    updateCompany(
+      id: $id
+      name: $name
+      userId: $userId
+      contactInfoId: $contactInfoId
+    ) {
+      id
+    }
+  }
+`;

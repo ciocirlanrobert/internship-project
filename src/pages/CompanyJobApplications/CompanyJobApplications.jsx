@@ -58,7 +58,7 @@ export default function CompanyJobApplications() {
 
   return (
     <>
-      {jobs.length > 0 && company !== undefined && (
+      {(company !== undefined && (
         <div className={style.root}>
           <div className={style.tableContainer}>
             <MaterialTable
@@ -72,7 +72,7 @@ export default function CompanyJobApplications() {
           </div>
           <Footer />
         </div>
-      )}
+      )) || <MaterialTable title="Job Applicants" />}
     </>
   );
 }

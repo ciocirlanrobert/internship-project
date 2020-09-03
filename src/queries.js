@@ -137,6 +137,7 @@ export const Companies = gql`
       id
       user {
         id
+        username
       }
     }
   }

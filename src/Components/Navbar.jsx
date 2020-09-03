@@ -39,7 +39,7 @@ export default function Navbar() {
   const { user } = useUserContext();
 
   const handleClick = () => {
-    if (user.id == 2) {
+    if (user.userRoleId === 2) {
       history.push("/company");
     } else {
       history.push("/admin");

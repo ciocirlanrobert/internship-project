@@ -2,6 +2,7 @@ import React from "react";
 import UsersTable from "./UsersTable";
 import { makeStyles } from "@material-ui/core";
 import Footer from "../../Components/Footer";
+import AdminCompanyTable from "./AdminCompanyTable";
 
 const useStyle = makeStyles({
   root: {
@@ -23,6 +24,9 @@ export default function Admin() {
     <div className={style.root}>
       <div className={style.tableContainer}>
         <UsersTable />
+      </div>
+      <div className={style.tableContainer}>
+        <AdminCompanyTable />
       </div>
       <Footer />
     </div>
