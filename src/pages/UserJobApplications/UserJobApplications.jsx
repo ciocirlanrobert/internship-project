@@ -25,7 +25,7 @@ export default function UserJobApplications() {
       title: "Status",
       field: "status",
       cellStyle: (rowData) => ({
-        backgroundColor: rowData.status === "true" ? "green" : "red",
+        backgroundColor: rowData.status ? "green" : "red",
       }),
     },
   ];
@@ -42,9 +42,10 @@ export default function UserJobApplications() {
         status: item.isAccepted,
       }));
 
+  console.log(tableData);
   return (
     <>
-      {tableData !== undefined && (
+      {tableData && (
         <MaterialTable
           title="My job applications"
           columns={columns}
