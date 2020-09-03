@@ -46,16 +46,16 @@ export default function Footer() {
         <Typography>Copyright &copy; RoJ 2020</Typography>
       </div>
       <div className={style.footerSocials}>
-        <a href="#" className={style.socialLink}>
+        <a href="https://www.google.ro" className={style.socialLink}>
           <FacebookIcon />
         </a>
-        <a href="#" className={style.socialLink}>
+        <a href="https://www.google.ro" className={style.socialLink}>
           <GitHubIcon />
         </a>
-        <a href="#" className={style.socialLink}>
+        <a href="https://www.google.ro" className={style.socialLink}>
           <LinkedInIcon />
         </a>
-        <a href="#" className={style.socialLink}>
+        <a href="https://www.google.ro" className={style.socialLink}>
           <InstagramIcon />
         </a>
       </div>
