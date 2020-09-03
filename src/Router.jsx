@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useHistory,
   Redirect,
 } from "react-router-dom";
 import Login from "./Components/Login";
@@ -11,7 +10,6 @@ import Register from "./Components/Register";
 import WelcomePage from "./Components/WelcomePage";
 import LandingPage from "./Components/LandingPage";
 import { useUserContext } from "./context/UserContext";
-import Restricted from "./Components/Restricted";
 import MyProfile from "./pages/MyProfile";
 import Admin from "./pages/Admin Dashboard/Admin";
 import Company from "./pages/Company Dashboard/Company";
