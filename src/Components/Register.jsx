@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useHistory } from "react-router-dom";
 import LoginRegisterSwitchers from "./LoginRegisterSwitchers";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
@@ -19,7 +20,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [firstName, setFirstname] = useState("");
   const [lastName, setLastname] = useState("");
-  const userRoleId = 3;
+  const userRoleId = 1;
 
   const USER = gql`
   mutation {
@@ -36,6 +37,7 @@ export default function Register() {
   `;
 
   const styles = useStyles();
+  const history = useHistory();
 
   const [addUser, { data }] = useMutation(USER);
   const [createContactinfo, { data: contactInfo }] = useMutation(
@@ -52,22 +54,24 @@ export default function Register() {
       const userId = response.data.createUser.id;
       createContactinfo({
         variables: {
-          email: "mock",
-          phone: "mock",
-          city: "mock",
-          website: "mock",
-          avatarUrl: "mock",
-          about: "mock",
+          email: "",
+          phone: "",
+          city: "",
+          website: "",
+          avatarUrl: "",
+          about: "",
           countryId: 3,
         },
-      }).then((response) => {
-        updateMockContactInfo({
-          variables: {
-            id: userId,
-            contactInfoId: response.data.createContactInfo.id,
-          },
-        });
-      });
+      })
+        .then((response) => {
+          updateMockContactInfo({
+            variables: {
+              id: userId,
+              contactInfoId: response.data.createContactInfo.id,
+            },
+          });
+        })
+        .then((response) => history.push("/login"));
     });
   };
 
