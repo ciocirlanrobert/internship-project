@@ -32,6 +32,7 @@ export const Countries = gql`
 export const Educations = gql`
   query userEducations($id: Int!) {
     user(id: $id) {
+      id
       userEducations {
         description
         id
@@ -46,6 +47,7 @@ export const Educations = gql`
 export const UserWorkExperiences = gql`
   query WorkExperience($id: Int!) {
     user(id: $id) {
+      id
       userWorkExperiences {
         institution
         description
@@ -60,6 +62,7 @@ export const UserWorkExperiences = gql`
 export const UserSkills = gql`
   query userSkills($id: Int!) {
     user(id: $id) {
+      id
       userSkills {
         id
         rating
@@ -221,6 +224,21 @@ export const JobApplications = gql`
           name
           id
         }
+      }
+    }
+  }
+`;
+
+export const User = gql`
+  query user($id: Int!) {
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      contactInfo {
+        id
+        email
+        avatarUrl
       }
     }
   }

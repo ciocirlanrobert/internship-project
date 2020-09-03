@@ -180,6 +180,7 @@ export const CreateUserSkill = gql`
       skill {
         id
       }
+      id
       rating
     }
   }
@@ -321,6 +322,7 @@ export const UpdateJobSkill = gql`
   mutation updateJobSkill($id: Int!, $rating: Int) {
     updateJobSkill(id: $id, rating: $rating) {
       rating
+      id
     }
   }
 `;
@@ -335,6 +337,7 @@ export const CreateJobSkill = gql`
   mutation createJobSkill($skillId: Int!, $rating: Int!, $jobId: Int!) {
     createJobSkill(skillId: $skillId, rating: $rating, jobId: $jobId) {
       rating
+      id
     }
   }
 `;
