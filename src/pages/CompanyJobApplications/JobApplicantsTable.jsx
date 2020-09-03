@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import MaterialTable from "material-table";
-import { JobApplications } from "../../queries";
+import { CompanyJobApplications } from "../../queries";
 import { useQuery, useMutation } from "@apollo/client";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core";
@@ -23,11 +23,11 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function JobApplicantsTable({ job }) {
-  const { data: queriedJobApplications } = useQuery(JobApplications);
+  const { data: queriedJobApplications } = useQuery(CompanyJobApplications);
   const [updateAccepted, { data: returnedAcceptedApplication }] = useMutation(
     UpdateJobApplication,
     {
-      refetchQueries: [{ query: JobApplications }],
+      refetchQueries: [{ query: CompanyJobApplications }],
     }
   );
 
@@ -115,7 +115,7 @@ export default function JobApplicantsTable({ job }) {
         </ul>
       </div>
       <div className={style.sectionContainer}>
-        <h1 className={style.sectionTitle}>Education</h1>
+        <h1 className={style.sectionTitle}>Skills</h1>
         <ul className={style.list}>
           {rowData.skills ? (
             rowData.skills.map((item) => (
