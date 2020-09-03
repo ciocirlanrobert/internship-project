@@ -183,17 +183,40 @@ export const JobApplications = gql`
       isAccepted
       user {
         id
+      }
+      job {
+        id
+        name
+        company {
+          name
+          id
+        }
+      }
+    }
+  }
+`;
+
+export const CompanyJobApplications = gql`
+  query userJobApplications {
+    userJobApplications {
+      id
+      isAccepted
+      user {
+        id
         firstName
         lastName
-        userEducations {
+        contactInfo {
           id
+        }
+        userEducations {
           institution
           description
+          id
         }
         userWorkExperiences {
-          id
           institution
           description
+          id
         }
         userSkills {
           id
@@ -201,19 +224,6 @@ export const JobApplications = gql`
           skill {
             id
             name
-          }
-        }
-        contactInfo {
-          id
-          email
-          phone
-          city
-          website
-          avatarUrl
-          about
-          country {
-            name
-            id
           }
         }
       }
