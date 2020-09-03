@@ -52,7 +52,10 @@ export default function JobDetail(props) {
   });
 
   const [createJobApplication, { data: jobApplication }] = useMutation(
-    CreateJobApplication
+    CreateJobApplication,
+    {
+      refetchQueries: [{ query: JobApplications }],
+    }
   );
 
   const { data: jobApplicationsRaw } = useQuery(JobApplications);
@@ -76,6 +79,8 @@ export default function JobDetail(props) {
           userId: user.id,
           jobId: +id,
         },
+      }).then((response) => {
+        history.push("/landingPage");
       });
     }
   };
@@ -141,8 +146,6 @@ export default function JobDetail(props) {
             </ul>
           </div>
           <div className={style.jobApplication}>
-            {console.log("user applicant", isUserApplicant(jobApplications))}
-            {console.log("user applications", jobApplications)}
             {isUserApplicant(jobApplications) || user.userRoleId >= 2 ? (
               <Button variant="contained" disabled>
                 Applied
