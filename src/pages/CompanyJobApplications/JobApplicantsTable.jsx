@@ -135,30 +135,34 @@ export default function JobApplicantsTable({ job }) {
 
   return (
     <>
-      <MaterialTable
-        title="Applicants"
-        data={tableData}
-        columns={applicantsColumns}
-        onRowClick={handleClick}
-        editable={{
-          onRowUpdate: (newData, oldData) =>
-            new Promise((resolve) => {
-              setTimeout(() => {
-                resolve();
-                console.log(newData);
-                updateAccepted({
-                  variables: {
-                    id: newData.id,
-                    isAccepted: newData.isAccepted === "true",
-                  },
-                });
-              }, 600);
-            }),
-        }}
-      />
-      <Modal open={open} onClose={handleClose}>
-        {modalBody}
-      </Modal>
+      {tableData !== undefined && (
+        <>
+          <MaterialTable
+            title="Applicants"
+            data={tableData}
+            columns={applicantsColumns}
+            onRowClick={handleClick}
+            editable={{
+              onRowUpdate: (newData, oldData) =>
+                new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve();
+                    console.log(newData);
+                    updateAccepted({
+                      variables: {
+                        id: newData.id,
+                        isAccepted: newData.isAccepted === "true",
+                      },
+                    });
+                  }, 600);
+                }),
+            }}
+          />
+          <Modal open={open} onClose={handleClose}>
+            {modalBody}
+          </Modal>
+        </>
+      )}
     </>
   );
 }

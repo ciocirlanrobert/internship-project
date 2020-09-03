@@ -58,7 +58,7 @@ export default function CompanyJobApplications() {
 
   return (
     <>
-      {(company !== undefined && (
+      {(company !== undefined && jobs !== undefined && (
         <div className={style.root}>
           <div className={style.tableContainer}>
             <MaterialTable

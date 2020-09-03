@@ -218,14 +218,6 @@ export const CompanyJobApplications = gql`
           description
           id
         }
-        userSkills {
-          id
-          rating
-          skill {
-            id
-            name
-          }
-        }
       }
       job {
         id
