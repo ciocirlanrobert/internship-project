@@ -115,11 +115,12 @@ export default function GeneralInfo() {
     setCountryId(event.target.value);
   };
 
+  console.log(generalInfo);
   return (
     <>
       <h1 className={style.sectionTitle}>General Info</h1>
       <form className={style.generalInfo} onSubmit={handleGeneralInfoSubmit}>
-        {generalInfo.Email &&
+        {generalInfo &&
           contactInfo.map((item) => (
             <div className={style.formRow} key={item}>
               <label className={style.label}>{item}</label>
@@ -135,7 +136,7 @@ export default function GeneralInfo() {
               />
             </div>
           ))}
-        {countries && generalInfo.Email && (
+        {countries && generalInfo && (
           <div className={style.formRow}>
             <label className={style.label}>Country</label>
             <Select
