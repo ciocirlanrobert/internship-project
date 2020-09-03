@@ -22,43 +22,84 @@ import CompanyJobApplications from "./pages/CompanyJobApplications/CompanyJobApp
 export default function RouteHandler() {
   const { user } = useUserContext();
 
-  const simpleUserRoutes = [
-    {
-      path: "/landingPage",
-      component: LandingPage,
-    },
+  const commonRoutes = [
     {
       path: "/myProfile",
       component: MyProfile,
     },
   ];
 
+  const adminRoutes = [
+    {
+      path: "/admin",
+      component: Admin,
+    },
+  ];
+
+  const simpleUserRoutes = [
+    {
+      path: "/applications",
+      component: UserJobApplications,
+    },
+  ];
+
+  const companyUserRoutes = [
+    {
+      path: "/company",
+      component: Company,
+    },
+    {
+      path: "/applicants",
+      component: CompanyJobApplications,
+    },
+  ];
+
   return (
     <Router>
       <Switch>
+        <Route exact path="/landingPage" component={LandingPage} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/" component={WelcomePage} />
-        <Route exact path="/restricted" component={Restricted} />
-        <Route exact path="/admin" component={Admin} />
-        <Route exact path="/company" component={Company} />
         <Route path="/jobs/:id" component={JobDetail} />
-        <Route exact path="/applications" component={UserJobApplications} />
-        <Route exact path="/applicants" component={CompanyJobApplications} />
-        {
-          // &&
-          true &&
-            simpleUserRoutes.map((route) => (
-              <Route
-                key={route.path}
-                path={route.path}
-                component={route.component}
-                exact
-              />
-            ))
-        }
+        {user.userRoleId > 0 &&
+          commonRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              exact
+            />
+          ))}
+        {user.userRoleId === 3 &&
+          adminRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              exact
+            />
+          ))}
+        {user.userRoleId === 2 &&
+          companyUserRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              exact
+            />
+          ))}
+        {user.userRoleId === 1 &&
+          simpleUserRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              component={route.component}
+              exact
+            />
+          ))}
         ;
-        <Redirect to="/restricted" />
+        <Redirect to="/" />
       </Switch>
     </Router>
   );
