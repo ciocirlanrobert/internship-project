@@ -87,7 +87,6 @@ export default function JobDetail(props) {
 
   const isUserApplicant = (jobApplications) => {
     return jobApplications.find((item) => {
-      console.log(user.id, item.user.id, id, item.job.id);
       return user.id === item.user.id && +id === item.job.id;
     });
   };
