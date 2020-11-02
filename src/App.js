@@ -2,6 +2,7 @@ import React from "react";
 import RouteHandler from "./Router.jsx";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import UserContextProvider from "./context/UserContext";
+import ErrorBoundary from "./utils/ErrorBoundary";
 
 const client = new ApolloClient({
   uri: "http://localhost:4001/gql",
@@ -13,10 +14,12 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  return (
+    return (
     <ApolloProvider client={client}>
       <UserContextProvider>
+      <ErrorBoundary>
         <RouteHandler />
+        </ErrorBoundary>
       </UserContextProvider>
     </ApolloProvider>
   );
