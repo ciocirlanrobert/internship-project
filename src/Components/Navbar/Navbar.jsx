@@ -9,17 +9,22 @@ import { useUserContext } from "../../context/UserContext";
 import Logo from "../../images/logos/logo_transparent.png";
 
 export default function Navbar() {
+
   const history = useHistory();
   const { user } = useUserContext();
   const classes = useStyle();
 
+  const handleClick = (event) => {
+    history.push(event.currentTarget.dataset.path);
+  }
+
   return (
     <AppBar position="static" className={classes.appBar} elevation={0}>
       <Toolbar className={classes.toolbar}>
-        <IconButton edge="start" size="small" disabled="true">
+        <IconButton edge="start" size="small" disabled>
         <img src={Logo} alt="Logo" className={classes.navbarLogo}></img>
         </IconButton>
-        <Button className={classes.link} variant="outlined">Login</Button>
+        <Button className={classes.link} variant="outlined" data-path="/login" onClick={handleClick}>Login</Button>
       </Toolbar>
     </AppBar>
   );
@@ -29,9 +34,10 @@ export default function Navbar() {
 const useStyle = makeStyles((theme) => ({
   appBar: {
     background: "none",
+    margin: 10,
   },
   navbarLogo: {
-    maxWidth: 90,
+    maxWidth: 80,
     flexGrow: 1,
   },
   toolbar: {

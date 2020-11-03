@@ -7,8 +7,8 @@ import {
 } from "react-router-dom";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
-import WelcomePage from "./Components/WelcomePage";
-import LandingPage from "./Components/LandingPage";
+import WelcomePage from "./pages/WelcomePage/WelcomePage";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import { useUserContext } from "./context/UserContext";
 import MyProfile from "./pages/MyProfile";
 import Admin from "./pages/Admin Dashboard/Admin";
@@ -55,7 +55,7 @@ export default function RouteHandler() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/landingPage" component={LandingPage} />
+        {/* <Route exact path="/landingPage" component={LandingPage} /> */}
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/" component={WelcomePage} />
