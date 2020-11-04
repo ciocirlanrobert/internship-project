@@ -20,6 +20,10 @@ export default function WelcomePage() {
     setChecked(true);
   }, []);
 
+  const handleClick = (event) => {
+    history.push(event.currentTarget.dataset.path);
+  }
+
   return (
       <Container maxWidth="lg">
       <Navbar />
@@ -50,7 +54,7 @@ export default function WelcomePage() {
             We believe great business treat their employees like people, not ID numbers - and that starts right here in our offices.
             From hands-on training to our vibrant work environment and truly supportive community, RoJ is the best place to kickstart your career.
             </p>
-            <Button variant="contained" color="primary">Apply Today</Button>
+            <Button variant="contained" color="primary" data-path="/login" onClick={handleClick}>Apply Today</Button>
           </div>
         </div>
       </Grow>
