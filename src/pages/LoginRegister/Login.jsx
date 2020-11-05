@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./LoginRegisterForm.css";
-import LoginRegisterSwitchers from "./LoginRegisterSwitchers";
+import LoginRegisterSwitchers from "../../Components/LoginRegisterSwitchers";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
@@ -10,23 +10,18 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { useLazyQuery, gql } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../../context/UserContext";
+import loginImage from "../../images/login.svg";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+  const [userAuthentication, setUserAuthentication] = useState({});
 
   const history = useHistory();
 
   const {
     user,
-    updateUsername,
-    updatePassword,
-    updateUserRoleId,
-    updateFirstname,
-    updateLastname,
-    updateId,
-    updateContactInfoId,
+    update
   } = useUserContext();
 
   const USERS = gql`
@@ -50,20 +45,25 @@ export default function Login() {
   const [getUsers, { data }] = useLazyQuery(USERS, {
     fetchPolicy: "network-only",
     onCompleted: () => {
+
       const index = data.users.findIndex(
-        (user) => user.username === username && user.password === password
-      );
+        (user) => user.username === userAuthentication.username && user.password === userAuthentication.password
+	  );
+        
+    console.log(index);
+      if (index !== -1) {
 
-      if (index != -1) {
-        updatePassword(password);
-        updateUsername(username);
-        updateFirstname(data.users[index].firstName);
-        updateLastname(data.users[index].lastName);
-        updateUserRoleId(data.users[index].userRole.id);
-        updateId(data.users[index].id);
-        updateContactInfoId(data.users[index].contactInfo.id);
+        update("password", userAuthentication.password);
+        update("username", userAuthentication.username);
+        update("firstName", data.users[index].firstName);
+        update("lastName", data.users[index].lastName);
+        update("userRoleId", data.users[index].userRole.id);
+        update("id", data.users[index].id);
+        update("contactInfoId", data.users[index].contactInfo.id);
 
-        history.push("/landingPage");
+        console.log(userAuthentication);
+		history.push("/landingPage");
+
       } else {
         alert("Invalid user or password!");
       }
@@ -75,6 +75,15 @@ export default function Login() {
     getUsers();
   };
 
+  const handleChange = (e) => {
+    e.persist(); 
+    
+	  setUserAuthentication(prevUser => ({
+		  ...prevUser,
+		  [e.target.name]: e.target.value,
+	  }));
+  }
+
   return (
     <div className="loginRegisterBody">
       <Container component="main" maxWidth="xs" className="main">
@@ -82,6 +91,9 @@ export default function Login() {
         <Typography component="h1" variant="h4">
           Log In
         </Typography>
+        <div className="imageContainer">
+          <img src={loginImage} alt="Login"/>
+        </div>
         <form className="form" onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -100,7 +112,7 @@ export default function Login() {
                 </InputAdornment>
               ),
             }}
-            onChange={(event) => setUsername(event.target.value)}
+            onChange={handleChange}
           />
           <TextField
             variant="outlined"
@@ -118,7 +130,7 @@ export default function Login() {
                 </InputAdornment>
               ),
             }}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={handleChange}
           />
           <Button
             type="submit"

@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useHistory } from "react-router-dom";
-import LoginRegisterSwitchers from "./LoginRegisterSwitchers";
+import LoginRegisterSwitchers from "../../Components/LoginRegisterSwitchers";
 import TextField from "@material-ui/core/TextField";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import { CreateContactInfo, UpdateUserContactInfo } from "../mutations";
+import { CreateContactInfo, UpdateUserContactInfo } from "../../mutations";
 
 const useStyles = makeStyles({
   firstName: {

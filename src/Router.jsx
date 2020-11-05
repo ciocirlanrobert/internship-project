@@ -5,8 +5,8 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
+import Login from "./pages/LoginRegister/Login";
+import Register from "./pages/LoginRegister/Register";
 import WelcomePage from "./pages/WelcomePage/WelcomePage";
 import LandingPage from "./pages/LandingPage/LandingPage";
 import { useUserContext } from "./context/UserContext";
