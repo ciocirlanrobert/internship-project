@@ -1,58 +1,49 @@
 import React, { useState } from 'react'
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
+import {
+    NEW_REGISTERED_USER,
+    NEW_REGISTERED_CONTACTINFO,
+    UPDATE_NEW_CONTACTINFO,
+} from './fetch/mutations'
+import { useToasts } from 'react-toast-notifications'
 import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitchers'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
-import { CreateContactInfo, UpdateUserContactInfo } from '../../mutations'
-
-const useStyles = makeStyles({
-    firstName: {
-        marginRight: '10px',
-    },
-})
+import registerImage from '../../images/register.svg'
+import './style/LoginRegisterForm.css'
 
 export default function Register() {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const [firstName, setFirstname] = useState('')
-    const [lastName, setLastname] = useState('')
-    const userRoleId = 1
+    const [userRegistration, setUserRegistration] = useState({})
 
-    const USER = gql`
-  mutation {
-      createUser(
-          username: "${username}"
-          firstName: "${firstName}" 
-          lastName: "${lastName}"
-          password: "${password}"
-          userRoleId: ${userRoleId}
-      ) {
-		  id
-      }
-  }
-  `
-
-    const styles = useStyles()
     const history = useHistory()
 
-    const [addUser, { data }] = useMutation(USER)
-    const [createContactinfo, { data: contactInfo }] = useMutation(
-        CreateContactInfo,
-    )
-    const [updateMockContactInfo, { data: contactInfoData }] = useMutation(
-        UpdateUserContactInfo,
+    const { addToast } = useToasts()
+
+    const [createNewUser] = useMutation(NEW_REGISTERED_USER, {
+        variables: {
+            username: userRegistration.username,
+            password: userRegistration.password,
+            firstName: userRegistration.firstName,
+            lastName: userRegistration.lastName,
+            userRoleId: 1,
+        },
+    })
+
+    const [createNewRegisteredContactInfo] = useMutation(
+        NEW_REGISTERED_CONTACTINFO,
     )
 
-    const handleSubmit = (event) => {
-        event.preventDefault()
+    const [updateNewContactInfo] = useMutation(UPDATE_NEW_CONTACTINFO)
 
-        addUser().then((response) => {
-            const userId = response.data.createUser.id
-            createContactinfo({
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        createNewUser().then((newUser) => {
+            const userId = newUser.data.createUser.id
+            createNewRegisteredContactInfo({
                 variables: {
                     email: '',
                     phone: '',
@@ -63,16 +54,38 @@ export default function Register() {
                     countryId: 3,
                 },
             })
-                .then((response) => {
-                    updateMockContactInfo({
+                .then((newContactInfo) => {
+                    updateNewContactInfo({
                         variables: {
                             id: userId,
-                            contactInfoId: response.data.createContactInfo.id,
+                            contactInfoId:
+                                newContactInfo.data.createContactInfo.id,
                         },
                     })
                 })
-                .then((response) => history.push('/login'))
+                .then(() => {
+                    setTimeout(() => {
+                        history.push('/login')
+                    }, 1000)
+
+                    addToast(
+                        'Congratulations, your account has been successfully created.',
+                        {
+                            appearance: 'success',
+                            autoDismiss: true,
+                            autoDismissTimeout: 3000,
+                        },
+                    )
+                })
         })
+    }
+
+    const handleChange = (e) => {
+        e.persist()
+        setUserRegistration((prevUser) => ({
+            ...prevUser,
+            [e.target.name]: e.target.value,
+        }))
     }
 
     return (
@@ -82,6 +95,9 @@ export default function Register() {
                 <Typography component="h1" variant="h4">
                     Register
                 </Typography>
+                <div className="imageContainer" style={{ margin: '3%' }}>
+                    <img src={registerImage} alt="Register" />
+                </div>
                 <form className="form" onSubmit={handleSubmit}>
                     <div className="name">
                         <TextField
@@ -89,27 +105,23 @@ export default function Register() {
                             margin="normal"
                             required
                             id="firstname"
-                            name="firstname"
+                            name="firstName"
                             label="Firstname"
                             autoComplete="off"
                             autoFocus
-                            className={styles.firstName}
-                            onChange={(event) =>
-                                setFirstname(event.target.value)
-                            }
+                            style={{ marginRight: '10px' }}
+                            onChange={handleChange}
                         />
                         <TextField
                             variant="outlined"
                             margin="normal"
                             required
                             id="lastname"
-                            name="lastname"
+                            name="lastName"
                             label="Lastname"
                             autoComplete="off"
                             autoFocus
-                            onChange={(event) =>
-                                setLastname(event.target.value)
-                            }
+                            onChange={handleChange}
                         />
                     </div>
                     <TextField
@@ -122,7 +134,7 @@ export default function Register() {
                         label="Username"
                         autoComplete="off"
                         autoFocus
-                        onChange={(event) => setUsername(event.target.value)}
+                        onChange={handleChange}
                     />
                     <TextField
                         variant="outlined"
@@ -135,7 +147,7 @@ export default function Register() {
                         type="password"
                         autoComplete="off"
                         autoFocus
-                        onChange={(event) => setPassword(event.target.value)}
+                        onChange={handleChange}
                     />
                     <Button
                         type="submit"

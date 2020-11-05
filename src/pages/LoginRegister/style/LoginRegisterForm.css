@@ -1,48 +1,47 @@
 .main {
-	min-height: 10vh;
-	display: flex !important;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	background-color: white;
-	padding: 10px 50px;
-	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15),
-		0 10px 10px -5px rgba(0, 0, 0, 0.1);
-	border-radius: 10px;
-	margin: 20px;
+    min-height: 10vh;
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 10px 50px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15),
+        0 10px 10px -5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 20px;
 }
 
 .loginRegisterBody {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	height: 100vh;
-	background: url("../../../images/loginRegisterBackground.svg");
-	background-size: cover;
-	background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+    background: url('../../../images/loginRegisterBackground.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .MuiInputBase-root {
-	background-color: white;
-	
+    background-color: white;
 }
 
 form {
-	margin-bottom: 30px;
-	padding: 30px;
+    margin-bottom: 30px;
+    padding: 30px;
 }
 
 #submit {
-	padding: 10px 0;
-	margin-top: 15px;
+    padding: 10px 0;
+    margin-top: 15px;
 }
 
 .name {
-	display: flex;
-	width: 100%;
+    display: flex;
+    width: 100%;
 }
 
 .imageContainer {
-	width: 50%;
-	margin: 5%;
+    width: 50%;
+    margin: 5%;
 }
