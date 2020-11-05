@@ -20,7 +20,7 @@ export default function Login() {
     const history = useHistory()
     const { addToast } = useToasts()
 
-    const { user, update } = useUserContext()
+    const { update } = useUserContext()
 
     const [getUsers, { data }] = useLazyQuery(LOGIN_USERS, {
         fetchPolicy: 'network-only',
@@ -40,16 +40,20 @@ export default function Login() {
                 update('id', data.users[index].id)
                 update('contactInfoId', data.users[index].contactInfo.id)
 
+                setTimeout(() => {
+                    history.push('/landingPage')
+                }, 600)
+
                 addToast('Logged in succesfully!', {
                     appearance: 'success',
                     autoDismiss: true,
-                    autoDismissTimeout: 3000,
+                    autoDismissTimeout: 2000,
                 })
             } else {
                 addToast('Invalid user or password!', {
                     appearance: 'error',
                     autoDismiss: true,
-                    autoDismissTimeout: 3000,
+                    autoDismissTimeout: 2000,
                 })
             }
         },
