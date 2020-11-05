@@ -12,12 +12,13 @@ import { useLazyQuery, gql } from "@apollo/client";
 import { useHistory } from "react-router-dom";
 import { useUserContext } from "../../context/UserContext";
 import loginImage from "../../images/login.svg";
+import {useToasts} from "react-toast-notifications";
 
 export default function Login() {
 
   const [userAuthentication, setUserAuthentication] = useState({});
-
   const history = useHistory();
+  const {addToast} = useToasts();
 
   const {
     user,
@@ -50,7 +51,6 @@ export default function Login() {
         (user) => user.username === userAuthentication.username && user.password === userAuthentication.password
 	  );
         
-    console.log(index);
       if (index !== -1) {
 
         update("password", userAuthentication.password);
@@ -61,11 +61,10 @@ export default function Login() {
         update("id", data.users[index].id);
         update("contactInfoId", data.users[index].contactInfo.id);
 
-        console.log(userAuthentication);
-		history.push("/landingPage");
+        addToast('Logged in succesfully!', {appearance: 'success', autoDismiss: true, autoDismissTimeout: 3000});
 
       } else {
-        alert("Invalid user or password!");
+        addToast('Invalid user or password!', {appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000});
       }
     },
   });
