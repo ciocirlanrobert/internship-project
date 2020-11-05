@@ -17,71 +17,17 @@ const UserContext = createContext(defaultValue);
 export default function UserContextProvider({ children }) {
   const [user, setUser] = useState(defaultValue.user);
 
-  const updateId = (newId) =>
+  const update = (field, value) =>
     setUser((prevUser) => {
       return {
         ...prevUser,
-        id: newId,
-      };
-    });
-
-  const updateContactInfoId = (newId) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        contactInfoId: newId,
-      };
-    });
-
-  const updateUsername = (newUsername) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        username: newUsername,
-      };
-    });
-
-  const updatePassword = (newPassword) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        password: newPassword,
-      };
-    });
-
-  const updateUserRoleId = (newUserRoleId) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        userRoleId: newUserRoleId,
-      };
-    });
-
-  const updateFirstname = (newFirstname) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        firstName: newFirstname,
-      };
-    });
-
-  const updateLastname = (newLastname) =>
-    setUser((prevUser) => {
-      return {
-        ...prevUser,
-        lastName: newLastname,
+        [field]: value,
       };
     });
 
   const contextValue = {
     user,
-    updatePassword,
-    updateUsername,
-    updateUserRoleId,
-    updateFirstname,
-    updateLastname,
-    updateId,
-    updateContactInfoId,
+    update
   };
 
   return (
