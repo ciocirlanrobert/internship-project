@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitchers'
-import { useLazyQuery, gql } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
 import { useToasts } from 'react-toast-notifications'
+import { LOGIN_USERS } from './fetch/queries'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
@@ -21,25 +22,7 @@ export default function Login() {
 
     const { user, update } = useUserContext()
 
-    const USERS = gql`
-        query users {
-            users {
-                username
-                password
-                firstName
-                lastName
-                id
-                contactInfo {
-                    id
-                }
-                userRole {
-                    id
-                }
-            }
-        }
-    `
-
-    const [getUsers, { data }] = useLazyQuery(USERS, {
+    const [getUsers, { data }] = useLazyQuery(LOGIN_USERS, {
         fetchPolicy: 'network-only',
         onCompleted: () => {
             const index = data.users.findIndex(
@@ -79,7 +62,6 @@ export default function Login() {
 
     const handleChange = (e) => {
         e.persist()
-
         setUserAuthentication((prevUser) => ({
             ...prevUser,
             [e.target.name]: e.target.value,
