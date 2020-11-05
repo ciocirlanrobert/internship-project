@@ -7,7 +7,7 @@ import {
     UPDATE_NEW_CONTACTINFO,
 } from './fetch/mutations'
 import { useToasts } from 'react-toast-notifications'
-import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitchers'
+import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitch/LoginRegisterSwitchers'
 import TextField from '@material-ui/core/TextField'
 import Container from '@material-ui/core/Container'
 import Button from '@material-ui/core/Button'

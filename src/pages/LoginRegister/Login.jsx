@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitchers'
+import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitch/LoginRegisterSwitchers'
 import { useLazyQuery } from '@apollo/client'
 import { useHistory } from 'react-router-dom'
 import { useUserContext } from '../../context/UserContext'
