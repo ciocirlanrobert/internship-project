@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { useMutation } from '@apollo/client'
+import { useLazyQuery } from '@apollo/react-hooks'
 import { useHistory } from 'react-router-dom'
 import {
     NEW_REGISTERED_USER,
     NEW_REGISTERED_CONTACTINFO,
     UPDATE_NEW_CONTACTINFO,
 } from './fetch/mutations'
+import { LOGIN_USERS } from './fetch/queries'
 import { useToasts } from 'react-toast-notifications'
 import LoginRegisterSwitchers from '../../Components/LoginRegisterSwitch/LoginRegisterSwitchers'
 import TextField from '@material-ui/core/TextField'
@@ -38,46 +40,67 @@ export default function Register() {
 
     const [updateNewContactInfo] = useMutation(UPDATE_NEW_CONTACTINFO)
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
+    const [getUsers, { data }] = useLazyQuery(LOGIN_USERS, {
+        fetchPolicy: 'network-only',
+        onCompleted: () => {
+            const index = data.users.findIndex(
+                (user) =>
+                    user.username === userRegistration.username &&
+                    user.password === userRegistration.password,
+            )
 
-        createNewUser().then((newUser) => {
-            const userId = newUser.data.createUser.id
-            createNewRegisteredContactInfo({
-                variables: {
-                    email: '',
-                    phone: '',
-                    city: '',
-                    website: '',
-                    avatarUrl: '',
-                    about: '',
-                    countryId: 3,
-                },
-            })
-                .then((newContactInfo) => {
-                    updateNewContactInfo({
+            if (index === -1) {
+                createNewUser().then((newUser) => {
+                    const userId = newUser.data.createUser.id
+                    createNewRegisteredContactInfo({
                         variables: {
-                            id: userId,
-                            contactInfoId:
-                                newContactInfo.data.createContactInfo.id,
+                            email: '',
+                            phone: '',
+                            city: '',
+                            website: '',
+                            avatarUrl: '',
+                            about: '',
+                            countryId: 3,
                         },
                     })
-                })
-                .then(() => {
-                    setTimeout(() => {
-                        history.push('/login')
-                    }, 1000)
+                        .then((newContactInfo) => {
+                            updateNewContactInfo({
+                                variables: {
+                                    id: userId,
+                                    contactInfoId:
+                                        newContactInfo.data.createContactInfo
+                                            .id,
+                                },
+                            })
+                        })
+                        .then(() => {
+                            setTimeout(() => {
+                                history.push('/login')
+                            }, 1000)
 
-                    addToast(
-                        'Congratulations, your account has been successfully created.',
-                        {
-                            appearance: 'success',
-                            autoDismiss: true,
-                            autoDismissTimeout: 3000,
-                        },
-                    )
+                            addToast(
+                                'Congratulations, your account has been successfully created.',
+                                {
+                                    appearance: 'success',
+                                    autoDismiss: true,
+                                    autoDismissTimeout: 3000,
+                                },
+                            )
+                        })
                 })
-        })
+            } else {
+                addToast('User already taken.', {
+                    appearance: 'error',
+                    autoDismiss: true,
+                    autoDismissTimeout: 2000,
+                })
+            }
+        },
+    })
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        getUsers()
     }
 
     const handleChange = (e) => {
