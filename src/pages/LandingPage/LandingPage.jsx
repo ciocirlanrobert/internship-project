@@ -19,6 +19,7 @@ export default function LandingPage() {
     return (
         <Container className="root" maxWidth="lg">
             <Navbar />
+            {/* Header */}
             <div className="headerContainer">
                 <div className="leftContainer">
                     <h1 className="title">
@@ -41,6 +42,7 @@ export default function LandingPage() {
                     <img src={Banner} alt="Banner" />
                 </div>
             </div>
+            {/* About */}
             <div className="aboutContainer">
                 <div className="aboutContainer__left">
                     <div className="aboutColumnLeft">
@@ -154,10 +156,12 @@ export default function LandingPage() {
                     </Button>
                 </div>
             </div>
+            {/* Jobs */}
             <h1 className="jobSectionTitle">
                 Are you ready to <span className="orange">join our team?</span>
             </h1>
             <JobsContainer />
+            {/* Stats */}
             <div className="stats">
                 <div className="stats__card">
                     <h3 className="stats__number">45+</h3>
