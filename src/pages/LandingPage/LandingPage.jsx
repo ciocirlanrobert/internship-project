@@ -1,6 +1,7 @@
 import React from 'react'
 import JobsContainer from './JobsContainer'
 import Navbar from '../../Components/Navbar/Navbar'
+import Footer from '../../Components/Footer/Footer'
 import {
     EventSeatOutlined,
     LocalDrinkOutlined,
@@ -175,6 +176,7 @@ export default function LandingPage() {
                     <h4 className="stats__label">Companies</h4>
                 </div>
             </div>
+            <Footer />
         </Container>
     )
 }

@@ -1,0 +1,39 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.footer__logo {
+    max-width: 80px;
+}
+
+.footer__copyright {
+    font-weight: 500;
+    font-size: 15px;
+}
+
+#footer__facebook,
+#footer__twitter,
+#footer__linkedin,
+#footer__github {
+    margin: 3px;
+    font-size: 30px;
+}
+
+#footer__facebook {
+    color: #4668b2;
+}
+
+#footer__twitter {
+    color: #1d98e6;
+}
+
+#footer__linkedin {
+    color: #0076b4;
+}
+
+#footer__github {
+    color: black;
+}
