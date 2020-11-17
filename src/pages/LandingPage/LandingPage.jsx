@@ -157,6 +157,24 @@ export default function LandingPage() {
                 Are you ready to <span className="orange">join our team?</span>
             </h1>
             <JobsContainer />
+            <div className="stats">
+                <div className="stats__card">
+                    <h3 className="stats__number">45+</h3>
+                    <h4 className="stats__label">Team members</h4>
+                </div>
+                <div className="stats__card">
+                    <h3 className="stats__number">50+</h3>
+                    <h4 className="stats__label">Total products</h4>
+                </div>
+                <div className="stats__card">
+                    <h3 className="stats__number">800,000+</h3>
+                    <h4 className="stats__label">Happy users</h4>
+                </div>
+                <div className="stats__card">
+                    <h3 className="stats__number">15</h3>
+                    <h4 className="stats__label">Companies</h4>
+                </div>
+            </div>
         </Container>
     )
 }
