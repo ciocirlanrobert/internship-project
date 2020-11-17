@@ -21,7 +21,7 @@ export default function LandingPage() {
             <div className="headerContainer">
                 <div className="leftContainer">
                     <h1 className="title">
-                        Join Our Team At <span className="company">Roj</span>
+                        Join Our Team At <span className="orange">Roj</span>
                     </h1>
                     <p className="description">
                         Work at the most dynamic and successful agency
@@ -125,7 +125,7 @@ export default function LandingPage() {
                 </div>
                 <div className="aboutContainer__right">
                     <h1 className="aboutContainer__right__title">
-                        Your Life at <span className="company">RoJ</span>
+                        Your Life at <span className="orange">RoJ</span>
                     </h1>
                     <p className="aboutContainer__right__description">
                         At RoJ we believe in working together and working hard.
@@ -153,6 +153,9 @@ export default function LandingPage() {
                     </Button>
                 </div>
             </div>
+            <h1 className="jobSectionTitle">
+                Are you ready to <span className="orange">join our team?</span>
+            </h1>
             <JobsContainer />
         </Container>
     )
