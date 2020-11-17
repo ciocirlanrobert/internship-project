@@ -3,8 +3,9 @@
     background-color: #f7f7f7;
 }
 
-.container {
+.headerContainer {
     display: flex;
+    margin-bottom: 120px;
 }
 
 .leftContainer {
@@ -23,7 +24,7 @@
 }
 
 .description {
-    color: gray;
+    color: #a7a9b5;
     font-weight: 500;
     margin-bottom: 10%;
 }
@@ -31,4 +32,103 @@
 .rightContainer {
     width: 50%;
     padding-top: 4%;
+}
+
+.jobCardContainer {
+    background-color: white;
+    width: 28%;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.jobCompany {
+    color: #ef6c35;
+    font-weight: 500;
+}
+
+.jobTitle {
+    font-size: 22px;
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.jobAbout {
+    margin: 2px 0 15px 0;
+}
+
+.jobsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.aboutContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8% 0 8% 8%;
+}
+
+.aboutContainer__left {
+    display: flex;
+    flex: 0.5;
+}
+
+.aboutContainer__right {
+    flex: 0.5;
+    padding-left: 90px;
+}
+
+.aboutColumnLeft,
+.aboutColumnRight {
+    display: flex;
+    flex-direction: column;
+    flex: 0.5;
+}
+
+.aboutColumnRight {
+    margin-top: 40px;
+}
+
+.aboutBox {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    margin: 20px 20px 20px 0;
+    padding: 50px 30px;
+}
+
+.aboutBox__title {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 10px 0;
+}
+
+.aboutBox__description {
+    font-size: 12px;
+    color: #a7a9b5;
+    font-weight: 500;
+    line-height: 1.8;
+}
+
+.aboutContainer__right__title {
+    font-size: 50px;
+}
+
+.aboutContainer__right__description {
+    color: #a7a9b5;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 40px;
+    line-height: 1.7;
+}
+
+.aboutContainer__right__description:nth-of-type(2) {
+    margin-bottom: 50px;
+}
+
+.aboutContainer__right__button {
+    margin-top: 20px;
 }
